@@ -7,6 +7,7 @@ import Home from './pages/home';
 import Projects from './pages/projects';
 import theme from './theme';
 import { router_basename } from './config';
+import Contacts from './pages/contacts';
 
 ReactDOM.render(
     <React.StrictMode>
@@ -16,6 +17,9 @@ ReactDOM.render(
                 <Switch>
                     <Route path='/projects'>
                         <Projects />
+                    </Route>
+                    <Route path='/contacts'>
+                        <Contacts />
                     </Route>
                     <Route path='*'>
                         <Home />

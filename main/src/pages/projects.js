@@ -1,6 +1,5 @@
 import { Box, CircularProgress } from "@material-ui/core";
 import React from "react";
-import { withRouter } from "react-router";
 
 
 import ProjectCard from "../components/project_card";
