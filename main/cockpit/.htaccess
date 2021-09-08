@@ -35,7 +35,7 @@ Options -Indexes
     Options -MultiViews
 
     RewriteEngine On
-    # RewriteBase /
+    # RewriteBase /main/cockpit/
 
     # Protect some contents
     RewriteRule ^.*/?\.git+ - [F,L]
