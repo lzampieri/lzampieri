@@ -1,8 +1,17 @@
-import { Box, Button, Card, CardContent, Typography } from "@material-ui/core";
+import { Box, Button, Card, CardContent, Typography, withStyles } from "@material-ui/core";
+
+const style = (theme) => { return {
+    resizable_box: {
+        width: '33%',
+        [theme.breakpoints.down('sm')]: {
+            width: '100%',
+        },
+    }
+}}
 
 function ProjectCard(props) {
     return (
-        <Box width="33%" p={3}><Card>
+        <Box p={3} className={ props.classes.resizable_box }><Card>
             <CardContent>
                 <Typography variant="h4" color="secondary">
                     { props.project.title }
@@ -21,4 +30,4 @@ function ProjectCard(props) {
     )
 }
 
-export default ProjectCard;
+export default withStyles(style)(ProjectCard);

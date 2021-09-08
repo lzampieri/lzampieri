@@ -32,7 +32,7 @@ class Projects extends React.Component {
             <Layout>
                 <Box display="flex" flexWrap="wrap" justifyContent="center">
                     { this.state.projects.map( pr => <ProjectCard project={pr} /> ) }
-                    { this.state.projects.length === 0 && <CircularProgress variant="indeterminate" color="primary" /> }
+                    { this.state.projects.length === 0 && <CircularProgress variant="indeterminate" color="primary" key={-1} /> }
                 </Box>
             </Layout>
         );
