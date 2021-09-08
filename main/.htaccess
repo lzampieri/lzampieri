@@ -6,9 +6,9 @@
     # RewriteBase /main/
 
     # # Allow access to cockpit
-    # RewriteCond %{REQUEST_URI} !^.*/main/cockpit/.*$
-    # RewriteCond %{REQUEST_URI} !^.*/main/build/.*$
+    RewriteCond %{REQUEST_URI} !^.*/main/cockpit/.*$
+    RewriteCond %{REQUEST_URI} !^.*/main/build/.*$
     # # Otherwise, redirect to "build" folder
-    # RewriteRule ^.*$ build/$0 [L]
+    RewriteRule ^.*$ build/$0 [L]
 
 </IfModule>
