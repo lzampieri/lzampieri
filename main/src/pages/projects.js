@@ -22,7 +22,6 @@ class Projects extends React.Component {
     async downloadData() {
         let response = await fetch(api_url + 'collections/get/projects');
         let data = await response.json();
-        console.log(data);
         this.setState({ projects: data.entries });
     }
     
@@ -30,7 +29,7 @@ class Projects extends React.Component {
         return (
             <Layout>
                 <Box display="flex" flexWrap="wrap" justifyContent="center">
-                    { this.state.projects.map( pr => <ProjectCard project={pr} /> ) }
+                    { this.state.projects.map( pr => <ProjectCard key={pr._id} project={pr} /> ) }
                     { this.state.projects.length === 0 && <CircularProgress variant="indeterminate" color="primary" key={-1} /> }
                 </Box>
             </Layout>

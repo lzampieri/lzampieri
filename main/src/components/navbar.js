@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 const items = [
     { name: 'Home', url: '/'},
     { name: 'Progetti', url: '/projects'},
+    { name: 'Didattica', url: '/didactic'},
     { name: 'Contatti', url: '/contacts'}
 ]
 
