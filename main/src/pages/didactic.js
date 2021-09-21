@@ -38,7 +38,6 @@ class Didactic extends React.Component {
         })
 
         this.setState({ courses: courses });
-        console.log(courses);
     }
     
     render() {
