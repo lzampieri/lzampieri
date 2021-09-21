@@ -1,5 +1,6 @@
 import { Container } from "@mui/material";
 import { Box } from "@mui/system";
+import Navbar from "./navbar";
 
 function Layout({children}) {
     return (
@@ -22,7 +23,7 @@ function Layout({children}) {
                 justifyContent="center"
                 width="100%"
                 >
-                Barra di navigazione
+                <Navbar />
             </Box>
             { children }
         </Container>
