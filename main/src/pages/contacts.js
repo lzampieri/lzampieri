@@ -3,7 +3,7 @@ import React from "react";
 import MailIcon from '@material-ui/icons/Mail';
 
 import Layout from "./layout";
-import { router_basename } from "../config";
+import { api_url } from "../config";
 
 class Contacts extends React.Component {
 
@@ -15,7 +15,7 @@ class Contacts extends React.Component {
                     <Typography variant="overline">  lzampieri@altervista.org</Typography>
                 </Box>
                 <Box display="flex" justifyContent="center" py={3}>
-                    <Button compnent="a" href={ "/" + router_basename + "/cockpit" } variant="outlined">Cockpit</Button>
+                    <Button compnent="a" href={ api_url.replace("/api/","") } variant="outlined">Cockpit</Button>
                 </Box>
             </Layout>
         );
