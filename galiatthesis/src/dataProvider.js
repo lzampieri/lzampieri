@@ -18,7 +18,8 @@ class DataProvider extends Component {
 
     async componentDidMount() {
         let classes = (await $.get( api_url + "collections/get/classes")).entries;
-        this.setState({ data: { classes: classes, loading: false } } );
+        let types = (await $.get( api_url + "collections/get/types")).entries;
+        this.setState({ data: { classes: classes, types: types, loading: false } } );
     }
 
     render() {
