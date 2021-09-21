@@ -1,18 +1,20 @@
-import { createTheme } from '@material-ui/core/styles';
+import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
-    palette: {
-        type: 'dark',
-        primary: {
-            main: '#e21a41',
+    "palette": {
+        "background": {
+            "paper": "#d8bcc0",
+            "default": "#fafafa"
         },
-        secondary: {
-            main: '#e0e0e0'
+        "primary": {
+            "main": "#a8191b",
+            "contrastText": "#fff"
+        },
+        "secondary": {
+            "main": "#f4bd9e",
+            "contrastText": "#6d2126"
         }
-    },
-    shape: {
-        borderRadius: 0,
-      },     
+    }  
 });
 
 export default theme;
