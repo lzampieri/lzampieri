@@ -5,11 +5,11 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import theme from './theme';
-import { router_basename } from './config';
 import Layout from './layout';
 import DataProvider from './dataProvider';
 import ThesisList from './pages/thesisList';
 import GlobalContext from './globalContext';
+import AddThesis from './pages/addThesis';
 
 function RoutesList() {
     if( useContext(GlobalContext).loading )
@@ -21,7 +21,7 @@ function RoutesList() {
     return (
         <Switch>
             <Route path='/add'>
-                Add stuff
+                <AddThesis />
             </Route>
             <Route path='/about'>
                 About
@@ -38,7 +38,7 @@ ReactDOM.render(
         <ThemeProvider theme={ theme }>
             <CssBaseline/>
             <DataProvider>
-                <BrowserRouter basename={ router_basename }>
+                <BrowserRouter basename={ process.env.PUBLIC_URL }>
                     <Layout>
                         <RoutesList />
                     </Layout>

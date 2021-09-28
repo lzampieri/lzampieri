@@ -1,5 +1,4 @@
 import { Component } from "react";
-import { api_url } from "./config";
 import GlobalContext from "./globalContext";
 import $ from 'jquery';
 
@@ -17,8 +16,8 @@ class DataProvider extends Component {
     }
 
     async componentDidMount() {
-        let classes = (await $.get( api_url + "collections/get/classes")).entries;
-        let types = (await $.get( api_url + "collections/get/types")).entries;
+        let classes = (await $.get( process.env.REACT_APP_API_URL + "collections/get/classes")).entries;
+        let types = (await $.get( process.env.REACT_APP_API_URL + "collections/get/types")).entries;
         this.setState({ data: { classes: classes, types: types, loading: false } } );
     }
 
