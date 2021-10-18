@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Container, Paper } from "@mui/material";
 import { Box } from "@mui/system";
 import Navbar from "./navbar";
 
@@ -25,7 +25,20 @@ function Layout({children}) {
                 >
                 <Navbar />
             </Box>
-            { children }
+            <Box
+                display="flex"
+                justifyContent="center"
+                width="100%"
+                p={3}
+                >
+                <Paper
+                    sx={ {
+                        width: { xs: 1, md: 0.5 },
+                        p: 3
+                    } }>
+                    { children }
+                </Paper>
+            </Box>
         </Container>
     )
 }

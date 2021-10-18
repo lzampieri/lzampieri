@@ -10,6 +10,7 @@ class DataProvider extends Component {
         this.state = {
             data: {
                 classes: [],
+                types: [],
                 loading: true
             }
         }
