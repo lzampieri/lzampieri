@@ -1,10 +1,10 @@
 import { Component, Fragment } from "react";
 import $ from 'jquery';
 import { Form, Formik, Field } from 'formik';
-import { Select } from 'formik-material-ui';
 import GlobalContext from '../globalContext';
-import { Box, MenuItem } from "@mui/material";
+import { Box } from "@mui/material";
 import SelectWithButtons from "../formComponents/selectWithButtons";
+import controlledDropdown from "../formComponents/controlledDropdown";
 
 class AddThesis extends Component {
     constructor(props) {
@@ -31,12 +31,9 @@ class AddThesis extends Component {
             <Fragment>
                 <Formik
                     initialValues = { {
-                        points: 1,
-                        accessible_at: 0,
-                        text: "",
-                        class: "SM",
-                        type: "LT",
-                        id: -1
+                        class: '',
+                        course_type: '',
+                        course: ''
                     } }
                     validate = { values => this.validator(values) }
                     onSubmit = { values => this.save(values) }
@@ -55,20 +52,22 @@ class AddThesis extends Component {
                             </Field>
                             <Field
                                 component={SelectWithButtons}
-                                name="type"
+                                name="course_type"
                                 options={ this.context.types }
                                 label_key="name"
                                 value_key="acronym"
                                 >
                             </Field>
                             <Field
-                                component={Select}
+                                component={controlledDropdown}
                                 name="course"
-                                style={{ width: "100%" }}
-                                label="Corso">
-                                { this.state.courses.map( c => 
-                                    <MenuItem value={ c.title } key={ c.title }>{ c.title }</MenuItem>
-                                )}
+                                options={ this.state.courses }
+                                label_key="title"
+                                value_key="title"
+                                control_key="course_type"
+                                control_field="course_type"
+                                label="Corso di laurea"
+                                >
                             </Field>
                             {/* <Field
                                 component={TextField}
