@@ -7,7 +7,7 @@ class SelectWithButtons extends Component {
     render() {
         return (
             <ToggleButtonGroup
-                {...this.props.field} /* Contains name, value, onChange */
+                {...this.props} /* Contains name, value, onChange */
                 sx={ {
                     '& .MuiToggleButtonGroup-grouped': {
                         bgcolor: 'background.paper',
@@ -26,7 +26,6 @@ class SelectWithButtons extends Component {
                 }}>
                 { this.props.options.map( o => (
                     <ToggleButton
-                        name={ this.props.field.name } // Used as backref from Formik
                         value={ o[this.props.value_key] }
                         key={ o[this.props.value_key] }>
                         { o[this.props.label_key] }

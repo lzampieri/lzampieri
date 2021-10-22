@@ -2,7 +2,7 @@ import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { Component } from "react";
 
 
-class controlledDropdown extends Component {
+class ControlledDropdown extends Component {
 
     render() {
         return (
@@ -20,12 +20,12 @@ class controlledDropdown extends Component {
                 <Select
                     style={{ width: "100%" }}
                     labelId={ this.props.name + "-label" } 
-                    disabled={ this.props.form.values[ this.props.control_field ] === '' }
+                    disabled={ this.props.control_field === '' }
                     {...this.props} /* Contains name, label, value, onChange */
                     >
 
                     { this.props.options.map( o => (
-                        o[ this.props.control_key ] === this.props.form.values[ this.props.control_field ] &&
+                        o[ this.props.control_key ] === this.props.control_field &&
                         <MenuItem
                             value={ o[this.props.value_key] }
                             key={ o[this.props.value_key] }>
@@ -39,4 +39,4 @@ class controlledDropdown extends Component {
     }
 };
 
-export default controlledDropdown;
+export default ControlledDropdown;
