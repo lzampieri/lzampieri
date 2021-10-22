@@ -15,11 +15,18 @@ class SelectWithButtons extends Component {
                         border: 1,
                         borderColor: 'primary.main'
                     },
+                    '& .MuiToggleButtonGroup-grouped.Mui-disabled': {
+                        borderColor: 'action.disabledBackground'
+                    },
                     '& .MuiToggleButtonGroup-grouped.Mui-selected': {
                         bgcolor: 'primary.main',
                         color: 'primary.contrastText'
                     },
                     '& .MuiToggleButtonGroup-grouped:hover': {
+                        bgcolor: 'primary.dark',
+                        color: 'primary.contrastText'
+                    },
+                    '& .MuiToggleButtonGroup-grouped.Mui-selected:hover': {
                         bgcolor: 'primary.dark',
                         color: 'primary.contrastText'
                     },

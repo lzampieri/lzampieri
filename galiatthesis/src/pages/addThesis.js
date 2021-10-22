@@ -1,9 +1,10 @@
-import { Component, Fragment } from "react";
+import { Component } from "react";
 import $ from 'jquery';
 import GlobalContext from '../globalContext';
-import { Box } from "@mui/material";
+import { Stack } from "@mui/material";
 import SelectWithButtons from "../formComponents/selectWithButtons";
 import ControlledDropdown from "../formComponents/controlledDropdown";
+import FileUploader from "../formComponents/fileUploader";
 
 class AddThesis extends Component {
     constructor(props) {
@@ -12,7 +13,8 @@ class AddThesis extends Component {
             courses: [],
             class: '',
             course_type: '',
-            course: ''
+            course: '',
+            file: null
         }
     }
 
@@ -30,7 +32,7 @@ class AddThesis extends Component {
 
     render () {
         return (
-            <Box display="flex" flexDirection="column" alignItems="center" gap={2} width="100%">
+            <Stack alignItems="center" spacing={2} width="100%">
                 <SelectWithButtons
                     name="class"
                     options={ this.context.classes }
@@ -45,18 +47,26 @@ class AddThesis extends Component {
                     label_key="name"
                     value_key="acronym"
                     value={ this.state.course_type }
-                    onChange={ (e) => this.setState({ course_type: e.currentTarget.value }) }
+                    onChange={ (e) => this.setState({ course_type: e.currentTarget.value, course: '' }) }
+                    disabled={ this.state.class === '' }
                     />
                 <ControlledDropdown
                     name="course"
+                    value={ this.state.course }
                     options={ this.state.courses }
                     label_key="title"
                     value_key="title"
                     control_key="course_type"
                     control_field={ this.state.course_type }
+                    onChange={ (e) => this.setState({ course: e.target.value }) }
                     label="Corso di laurea"
                     />
-            </Box>
+                <FileUploader
+                    name="thesis"
+                    disabled={ this.state.course === '' }
+                    onChange={(e) => this.setState({ file: e.target.files[0] }) }
+                    />
+            </Stack>
         )
     }
 

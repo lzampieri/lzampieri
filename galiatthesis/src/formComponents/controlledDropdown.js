@@ -8,19 +8,32 @@ class ControlledDropdown extends Component {
         return (
             <FormControl fullWidth
                 sx={{
-                        '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-                            borderColor: 'primary.main'
+                        '& .MuiOutlinedInput-root' : {
+                            '& fieldset': {
+                                borderColor: 'primary.main',
+                            },
+                            '&.Mui-disabled fieldset': {
+                                borderColor: 'rgba(0, 0, 0, 0.12)',
+                            },
                         },
-                        '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline .Mui-disabled': {
-                            borderColor: 'action.disabledBackground'
-                        }
+                        '& label': {
+                            color: 'primary.main',
+                            '&.Mui-disabled ': {
+                                color: 'rgba(0, 0, 0, 0.24)'
+                            }
+                        },
                     }}
             >
-                <InputLabel id={ this.props.name + "-label" } >{ this.props.label }</InputLabel>
+                <InputLabel
+                    id={ this.props.name + "-label" }
+                    disabled={ this.props.control_field === '' }>
+                    { this.props.label }
+                </InputLabel>
                 <Select
                     style={{ width: "100%" }}
                     labelId={ this.props.name + "-label" } 
                     disabled={ this.props.control_field === '' }
+                    displayEmpty
                     {...this.props} /* Contains name, label, value, onChange */
                     >
 
