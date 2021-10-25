@@ -1,10 +1,13 @@
-import { Component } from "react";
+import { Component, Fragment } from "react";
 import $ from 'jquery';
 import GlobalContext from '../globalContext';
 import { Stack } from "@mui/material";
 import SelectWithButtons from "../formComponents/selectWithButtons";
 import ControlledDropdown from "../formComponents/controlledDropdown";
 import FileUploader from "../formComponents/fileUploader";
+import MyBackDrop from "../layoutComponents/MyBackDrop";
+import CustomTextField from "../formComponents/customTextField";
+import { withSnackbar } from "notistack";
 
 class AddThesis extends Component {
     constructor(props) {
@@ -14,7 +17,10 @@ class AddThesis extends Component {
             class: '',
             course_type: '',
             course: '',
-            file: null
+            file: null,
+            loading: false,
+            author: '',
+            advisor: ''
         }
     }
 
@@ -23,21 +29,84 @@ class AddThesis extends Component {
         this.setState({ courses: courses } );
     }
 
-    validator(values) {
-        return {};
+    async uploadForm( thefile ) {
+        this.setState({ loading: true });
+
+        try {
+            let send_url = process.env.REACT_APP_API_URL + "cockpit/addAssets?token=" + process.env.REACT_APP_API_TOKEN;
+            let data = new FormData();
+            data.append('files[]', thefile);
+            let res = await $.ajax( {
+                url: send_url,
+                type: 'POST',
+                data: data,
+                processData: false,
+                contentType: false
+                } );
+            let asset = res.assets[0];
+            if( !asset ) throw new Error('Errore nel caricamento del file. Riprova.');
+
+            let thesis_send_url = process.env.REACT_APP_API_URL + "collections/save/thesis?token=" + process.env.REACT_APP_API_TOKEN;
+            let thesis_data = {
+                class: { _id: this.state.class, link: 'classes'},
+                course_type: {_id: this.state.course_type, link: 'types'},
+                course: this.state.course,
+                author: this.state.author,
+                advisor: this.state.advisor,
+                file: asset
+            };
+            await $.ajax( {
+                url: thesis_send_url,
+                type: 'POST',
+                data: JSON.stringify( {data: thesis_data} ),
+                processData: false,
+                contentType: false,
+                headers: { 'Content-Type': 'application/json' }
+                } );
+
+                this.props.enqueueSnackbar('Tesi salvata!', { variant: 'success' } );
+        } catch (e) {
+            // Check if the error has a JSON response
+            if( e.responseJSON && e.responseJSON.error )
+                this.props.enqueueSnackbar(e.responseJSON.error, { variant: 'error' } );
+            // Check if the error has a message
+            else if( e.message )
+                this.props.enqueueSnackbar(e.message, { variant: 'error' } );
+            // Otherwise log the error
+            else {
+                this.props.enqueueSnackbar("Errore generico", { variant: 'error' } );
+                console.log(e);
+            }
+        }
+
+        this.setState({
+            class: '',
+            course_type: '',
+            course: '',
+            author: '',
+            advisor: '',
+            file: null,
+            loading: false
+        })
     }
 
-    async save(values) {
+    get_course_type_acronym( course_type_id ) {
+        for( const c of this.context.types ) {
+            if( c._id === course_type_id )
+                return c.acronym;
+        }
+        return '';
     }
 
     render () {
         return (
+            <Fragment>
             <Stack alignItems="center" spacing={2} width="100%">
                 <SelectWithButtons
                     name="class"
                     options={ this.context.classes }
                     label_key="name"
-                    value_key="acronym"
+                    value_key="_id"
                     value={ this.state.class }
                     onChange={ (e) => this.setState({ class: e.currentTarget.value }) }
                     />
@@ -45,7 +114,7 @@ class AddThesis extends Component {
                     name="course_type"
                     options={ this.context.types }
                     label_key="name"
-                    value_key="acronym"
+                    value_key="_id"
                     value={ this.state.course_type }
                     onChange={ (e) => this.setState({ course_type: e.currentTarget.value, course: '' }) }
                     disabled={ this.state.class === '' }
@@ -57,16 +126,32 @@ class AddThesis extends Component {
                     label_key="title"
                     value_key="title"
                     control_key="course_type"
-                    control_field={ this.state.course_type }
+                    control_field={ this.get_course_type_acronym( this.state.course_type ) }
                     onChange={ (e) => this.setState({ course: e.target.value }) }
                     label="Corso di laurea"
                     />
+                <CustomTextField
+                    name="author"
+                    disabled={ this.state.course === '' }
+                    value={ this.state.author }
+                    onChange={ (e) => this.setState({ author: e.target.value }) }
+                    label="Laureato"
+                    />
+                <CustomTextField
+                    name="advisor"
+                    disabled={ this.state.course === '' }
+                    value={ this.state.advisor }
+                    onChange={ (e) => this.setState({ advisor: e.target.value }) }
+                    label="Relatore/i"
+                    />
                 <FileUploader
                     name="thesis"
-                    disabled={ this.state.course === '' }
-                    onChange={(e) => this.setState({ file: e.target.files[0] }) }
+                    disabled={ this.state.course === '' || this.state.author === '' || this.state.advisor === '' }
+                    onChange={ (e) => this.uploadForm( e.target.files[0] ) }
                     />
             </Stack>
+            <MyBackDrop open={ this.state.loading } />
+            </Fragment>
         )
     }
 
@@ -74,4 +159,4 @@ class AddThesis extends Component {
 
 AddThesis.contextType = GlobalContext;
 
-export default AddThesis;
+export default withSnackbar(AddThesis);

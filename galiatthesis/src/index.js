@@ -3,6 +3,7 @@ import { Box } from '@mui/system';
 import React, { useContext } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { SnackbarProvider } from 'notistack';
 
 import theme from './theme';
 import Layout from './layout';
@@ -38,11 +39,13 @@ ReactDOM.render(
         <ThemeProvider theme={ theme }>
             <CssBaseline/>
             <DataProvider>
+            <SnackbarProvider>
                 <BrowserRouter basename={ process.env.PUBLIC_URL }>
                     <Layout>
                         <RoutesList />
                     </Layout>
                 </BrowserRouter>
+            </SnackbarProvider>
             </DataProvider>
         </ThemeProvider>
     </React.StrictMode>,
