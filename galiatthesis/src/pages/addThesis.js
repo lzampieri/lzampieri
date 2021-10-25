@@ -57,8 +57,6 @@ class AddThesis extends Component {
             };
             if( this.state.course_type_label === 'SG' )
                 thesis_data.course = this.get_class_name( this.state.class );
-
-            console.log( thesis_data );
             
             await $.ajax( {
                 url: thesis_send_url,
@@ -70,6 +68,8 @@ class AddThesis extends Component {
                 } );
 
                 this.props.enqueueSnackbar('Tesi salvata!', { variant: 'success' } );
+                this.context.reloadData();
+
         } catch (e) {
             // Check if the error has a JSON response
             if( e.responseJSON && e.responseJSON.error )
