@@ -15,7 +15,7 @@ class AddThesis extends Component {
         this.state = {
             courses: [],
             class: '',
-            course_type: '',
+            course_type_label: '',
             course: '',
             file: null,
             loading: false,
@@ -49,12 +49,17 @@ class AddThesis extends Component {
             let thesis_send_url = process.env.REACT_APP_API_URL + "collections/save/thesis?token=" + process.env.REACT_APP_API_TOKEN;
             let thesis_data = {
                 class: { _id: this.state.class, link: 'classes'},
-                course_type: {_id: this.state.course_type, link: 'types'},
+                course_type: {_id: this.get_course_type_id( this.state.course_type_label ), link: 'types'},
                 course: this.state.course,
                 author: this.state.author,
                 advisor: this.state.advisor,
                 file: asset
             };
+            if( this.state.course_type_label === 'SG' )
+                thesis_data.course = this.get_class_name( this.state.class );
+
+            console.log( thesis_data );
+            
             await $.ajax( {
                 url: thesis_send_url,
                 type: 'POST',
@@ -90,12 +95,26 @@ class AddThesis extends Component {
         })
     }
 
-    get_course_type_acronym( course_type_id ) {
+    get_course_type_id( course_type ) {
         for( const c of this.context.types ) {
-            if( c._id === course_type_id )
-                return c.acronym;
+            if( c.acronym === course_type )
+                return c._id;
         }
-        return '';
+        throw new Error('Errore nella decodifica del tipo di corso');
+    }
+
+    get_class_name( class_id ) {
+        for( const c of this.context.classes ) {
+            if( c._id === class_id )
+                return c.name;
+        }
+        throw new Error('Errore nella decodifica della classe');
+    }
+
+    is_course_name_ok() {
+        if( this.state.course !== '' ) return true;
+        if( this.state.course_type_label === 'SG' ) return true;
+        return false;
     }
 
     render () {
@@ -114,9 +133,9 @@ class AddThesis extends Component {
                     name="course_type"
                     options={ this.context.types }
                     label_key="name"
-                    value_key="_id"
-                    value={ this.state.course_type }
-                    onChange={ (e) => this.setState({ course_type: e.currentTarget.value, course: '' }) }
+                    value_key="acronym"
+                    value={ this.state.course_type_label }
+                    onChange={ (e) => this.setState({ course_type_label: e.currentTarget.value, course: '' }) }
                     disabled={ this.state.class === '' }
                     />
                 <ControlledDropdown
@@ -126,27 +145,28 @@ class AddThesis extends Component {
                     label_key="title"
                     value_key="title"
                     control_key="course_type"
-                    control_field={ this.get_course_type_acronym( this.state.course_type ) }
+                    control_field={ this.state.course_type_label }
+                    extra_disabled={ this.state.course_type_label === 'SG' }
                     onChange={ (e) => this.setState({ course: e.target.value }) }
                     label="Corso di laurea"
                     />
                 <CustomTextField
                     name="author"
-                    disabled={ this.state.course === '' }
+                    disabled={ !this.is_course_name_ok() }
                     value={ this.state.author }
                     onChange={ (e) => this.setState({ author: e.target.value }) }
                     label="Laureato"
                     />
                 <CustomTextField
                     name="advisor"
-                    disabled={ this.state.course === '' }
+                    disabled={ !this.is_course_name_ok() }
                     value={ this.state.advisor }
                     onChange={ (e) => this.setState({ advisor: e.target.value }) }
                     label="Relatore/i"
                     />
                 <FileUploader
                     name="thesis"
-                    disabled={ this.state.course === '' || this.state.author === '' || this.state.advisor === '' }
+                    disabled={ !this.is_course_name_ok() || this.state.author === '' || this.state.advisor === '' }
                     onChange={ (e) => this.uploadForm( e.target.files[0] ) }
                     />
             </Stack>

@@ -26,13 +26,13 @@ class ControlledDropdown extends Component {
             >
                 <InputLabel
                     id={ this.props.name + "-label" }
-                    disabled={ this.props.control_field === '' }>
+                    disabled={ this.props.control_field === '' || this.props.extra_disabled }>
                     { this.props.label }
                 </InputLabel>
                 <Select
                     style={{ width: "100%" }}
                     labelId={ this.props.name + "-label" } 
-                    disabled={ this.props.control_field === '' }
+                    disabled={ this.props.control_field === '' || this.props.extra_disabled }
                     displayEmpty
                     {...this.props} /* Contains name, label, value, onChange */
                     >
