@@ -1,14 +1,18 @@
 import { Component } from "react";
 import GlobalContext from '../globalContext';
+import { Virtuoso } from 'react-virtuoso';
+import { Button } from '@mui/material';
 
 class ThesisList extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
-        return JSON.stringify( this.context.thesis )
+        return (
+            <Virtuoso
+                totalCount={ this.context.thesis.length }
+                itemContent={ index => <Button sx={{ width: '100%', wordWrap: 'break-word' }}>{ JSON.stringify( this.context.thesis[index] ) }</Button> }
+                style={{ height: '400px' }}
+                />
+        )
     }
 }
 
