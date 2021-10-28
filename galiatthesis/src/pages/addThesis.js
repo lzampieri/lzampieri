@@ -19,6 +19,7 @@ class AddThesis extends Component {
             course: '',
             file: null,
             loading: false,
+            title: '',
             author: '',
             advisor: ''
         }
@@ -51,6 +52,7 @@ class AddThesis extends Component {
                 class: { _id: this.state.class, link: 'classes'},
                 course_type: {_id: this.get_course_type_id( this.state.course_type_label ), link: 'types'},
                 course: this.state.course,
+                title: this.state.title,
                 author: this.state.author,
                 advisor: this.state.advisor,
                 file: asset
@@ -88,6 +90,7 @@ class AddThesis extends Component {
             class: '',
             course_type: '',
             course: '',
+            title: '',
             author: '',
             advisor: '',
             file: null,
@@ -151,6 +154,13 @@ class AddThesis extends Component {
                     label="Corso di laurea"
                     />
                 <CustomTextField
+                    name="title"
+                    disabled={ !this.is_course_name_ok() }
+                    value={ this.state.title }
+                    onChange={ (e) => this.setState({ title: e.target.value }) }
+                    label="Titolo"
+                    />
+                <CustomTextField
                     name="author"
                     disabled={ !this.is_course_name_ok() }
                     value={ this.state.author }
@@ -166,7 +176,7 @@ class AddThesis extends Component {
                     />
                 <FileUploader
                     name="thesis"
-                    disabled={ !this.is_course_name_ok() || this.state.author === '' || this.state.advisor === '' }
+                    disabled={ !this.is_course_name_ok() || this.state.title === '' || this.state.author === '' || this.state.advisor === '' }
                     onChange={ (e) => this.uploadForm( e.target.files[0] ) }
                     />
             </Stack>

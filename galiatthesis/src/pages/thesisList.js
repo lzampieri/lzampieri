@@ -1,7 +1,7 @@
 import { Component } from "react";
 import GlobalContext from '../globalContext';
 import { Virtuoso } from 'react-virtuoso';
-import { Button } from '@mui/material';
+import ThesisListItem from "./thesisListItem";
 
 class ThesisList extends Component {
 
@@ -9,7 +9,7 @@ class ThesisList extends Component {
         return (
             <Virtuoso
                 totalCount={ this.context.thesis.length }
-                itemContent={ index => <Button sx={{ width: '100%', wordWrap: 'break-word' }}>{ JSON.stringify( this.context.thesis[index] ) }</Button> }
+                itemContent={ index => <ThesisListItem thesis={ this.context.thesis[ this.context.thesis.length - index - 1 ] } /> }
                 style={{ height: '400px' }}
                 />
         )
@@ -19,16 +19,3 @@ class ThesisList extends Component {
 ThesisList.contextType = GlobalContext;
 
 export default ThesisList;
-
-// export default function ThesisList() {
-//     return (
-//         <GlobalContext.Consumer>
-//             { value => (
-//                 <Fragment>
-//                     {value.classes.map( i => (<Chip label={ i.acronym } sx={{ bgcolor: i.color + "60", color: 'secondary.contrastText' }} />) ) }
-//                     {value.types.map( i => (<Chip label={ i.acronym } color='primary' />) ) }
-//                 </Fragment> 
-//             ) }
-//         </GlobalContext.Consumer>
-//     )
-// }
