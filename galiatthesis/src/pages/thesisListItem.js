@@ -1,14 +1,14 @@
-import { Component } from "react";
+import { PureComponent } from "react";
 import { Button, Chip, IconButton, ListItem, Stack, Typography } from '@mui/material';
 import { Download } from '@mui/icons-material';
 
-class ThesisListItem extends Component {
+class ThesisListItem extends PureComponent {
 
     render() {
         let th = this.props.thesis;
         return (
             <ListItem
-                sx={{ width: '100%', border: 1, borderRadius: 4, borderColor: 'primary.main', my: 2 }}
+                sx={{ width: '100%', border: 1, borderRadius: 4, borderColor: 'primary.main', my: 1 }}
                 secondaryAction={ <IconButton color='primary' component='a' href={ process.env.REACT_APP_STORAGE_URL + th.file.path } ><Download/></IconButton> }>
             <Stack spacing={1}>
                 <Stack direction='row'>
