@@ -5,8 +5,9 @@
     RewriteEngine On
     # RewriteBase /galiatthesis/
 
-    # # Allow access to cockpit
+    # # Allow access to cockpit or to laravel
     RewriteCond %{REQUEST_URI} !^.*/galiatthesis/cockpit/.*$
+    RewriteCond %{REQUEST_URI} !^.*/galiatthesis/laravel/.*$
     RewriteCond %{REQUEST_URI} !^.*/galiatthesis/build/.*$
     # # Otherwise, redirect to "build" folder
     RewriteRule ^.*$ build/$0 [L]
