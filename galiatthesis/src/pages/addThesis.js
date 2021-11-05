@@ -34,7 +34,7 @@ class AddThesis extends Component {
         this.setState({ loading: true });
 
         try {
-            let send_url = process.env.REACT_APP_API_URL + "cockpit/addAssets?token=" + process.env.REACT_APP_API_TOKEN;
+            let send_url = process.env.REACT_APP_API_URL + "cockpit/addAssets";
             let data = new FormData();
             data.append('files[]', thefile);
             let res = await $.ajax( {
@@ -42,12 +42,13 @@ class AddThesis extends Component {
                 type: 'POST',
                 data: data,
                 processData: false,
-                contentType: false
+                contentType: false,
+                headers: { 'Cockpit-Token': this.context.token }
                 } );
             let asset = res.assets[0];
             if( !asset ) throw new Error('Errore nel caricamento del file. Riprova.');
 
-            let thesis_send_url = process.env.REACT_APP_API_URL + "collections/save/thesis?token=" + process.env.REACT_APP_API_TOKEN;
+            let thesis_send_url = process.env.REACT_APP_API_URL + "collections/save/thesis";
             let thesis_data = {
                 class: { _id: this.state.class, link: 'classes'},
                 course_type: {_id: this.get_course_type_id( this.state.course_type_label ), link: 'types'},
@@ -66,7 +67,7 @@ class AddThesis extends Component {
                 data: JSON.stringify( {data: thesis_data} ),
                 processData: false,
                 contentType: false,
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json', 'Cockpit-Token': this.context.token }
                 } );
 
                 this.props.enqueueSnackbar('Tesi salvata!', { variant: 'success' } );

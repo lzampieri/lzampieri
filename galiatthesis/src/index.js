@@ -25,7 +25,7 @@ function RoutesList() {
                 <AddThesis />
             </Route>
             <Route path='/about'>
-                About
+                <a href={ process.env.REACT_APP_API_URL + '../'}>Cockpit</a>
             </Route>
             <Route path='*'>
                 <ThesisList />

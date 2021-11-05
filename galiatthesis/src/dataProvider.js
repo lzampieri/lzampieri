@@ -13,7 +13,8 @@ class DataProvider extends Component {
                 types: [],
                 thesis: [],
                 reloadData: () => this.loadData(),
-                loading: true
+                loading: true,
+                token: 'c212b487ccb9bc2c3c3ca3ca3fe9ea'
             }
         }
     }
@@ -24,11 +25,12 @@ class DataProvider extends Component {
 
     async loadData(first = false) {
         if( this.state.data.loading && !first ) return;
-        this.setState({ loading: true });
-        let classes = (await $.get( process.env.REACT_APP_API_URL + "collections/get/classes")).entries;
-        let types = (await $.get( process.env.REACT_APP_API_URL + "collections/get/types")).entries;
-        let thesis = (await $.get( process.env.REACT_APP_API_URL + "collections/get/thesis?populate=1")).entries;
-        this.setState({ data: { classes: classes, types: types, thesis: thesis, reloadData: () => this.loadData(), loading: false } } );
+        let new_data = {...this.state.data}; // Complete copy of data, to ensure is seen as different from subsequent comparings
+        new_data.classes = (await $.get( process.env.REACT_APP_API_URL + "collections/get/classes?token=" + this.state.data.token)).entries;
+        new_data.types = (await $.get( process.env.REACT_APP_API_URL + "collections/get/types?token=" + this.state.data.token)).entries;
+        new_data.thesis = (await $.get( process.env.REACT_APP_API_URL + "collections/get/thesis?populate=1&token=" + this.state.data.token)).entries;
+        new_data.loading = false;
+        this.setState( { data: new_data } );
     }
 
     render() {

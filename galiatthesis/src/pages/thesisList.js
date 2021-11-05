@@ -14,14 +14,6 @@ class ThesisList extends Component {
         }
     }
 
-    isOpen( th ) {
-        if( !this.isEnabled( th.class._id ) ) return false;
-        if( !this.isEnabled( th.course_type._id ) ) return false;
-        let check_string = th.course + th.title + th.author + th.advisor;
-        check_string = check_string.toLowerCase();
-        return check_string.includes( this.state.text_filter.toLowerCase() );
-    }
-
     getChips(array) {
         return (
             <Stack direction='row'>
@@ -56,6 +48,14 @@ class ThesisList extends Component {
         else return { bgcolor: "#00000000", color: 'text.primary', border: 1, borderColor: color_enabled};
     }
 
+    isOpen( th ) {
+        if( !this.isEnabled( th.class._id ) ) return false;
+        if( !this.isEnabled( th.course_type._id ) ) return false;
+        let check_string = th.course + th.title + th.author + th.advisor;
+        check_string = check_string.toLowerCase();
+        return check_string.includes( this.state.text_filter.toLowerCase() );
+    }
+    
     render() {
         return (
             <Stack alignItems='flex-end'>
