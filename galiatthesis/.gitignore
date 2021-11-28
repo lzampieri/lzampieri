@@ -14,5 +14,9 @@ yarn-error.log
 /.idea
 /.vscode
 
+# Blueprint
+/draft.yaml
+/.blueprint
+
 # Old versions
 /old_*
