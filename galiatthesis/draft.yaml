@@ -1,0 +1,13 @@
+models:
+    Class:
+        acronym: string:2
+        full_name: string:200
+        color: string:7
+
+    Thesis:
+        class_id: id foreign
+        author: string:200
+        advisor: string:200
+        title: string:200
+        course: string:200
+        file: string:200
