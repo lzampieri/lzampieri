@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Section;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -37,6 +38,7 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+            'sections' => function () { return Section::select('shortname', 'title')->get(); }
         ]);
     }
 }
