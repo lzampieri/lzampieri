@@ -8,6 +8,7 @@
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
         <script>var assets_url = "{{ asset('img/')}}"</script>
+        <script>var public_url = "{{ url('/')}}"</script>
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>

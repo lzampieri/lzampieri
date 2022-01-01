@@ -6,7 +6,7 @@ export default function SectionMenuItem({ title, url }) {
     return (
         <Button
             component={Link}
-            href={ url }
+            href={ public_url + url }
             variant="outlined"
             sx={{
                 justifyContent: 'left'

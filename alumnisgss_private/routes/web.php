@@ -4,6 +4,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+use App\Http\Controllers\SectionController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,12 +18,7 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return redirect('/homepage');
 });
 
 // Route::get('/dashboard', function () {
@@ -31,5 +28,7 @@ Route::get('/', function () {
 Route::get('/homepage', function () {
     return Inertia::render('HomePage');
 });
+
+Route::get('/s/{section}', [SectionController::class, 'show']);
 
 require __DIR__.'/auth.php';
