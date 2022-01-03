@@ -7,9 +7,12 @@ use App\Http\Controllers\SectionController;
 
 Route::get('/', function () { return redirect('/homepage'); });
 
-Route::get('/homepage', function () { return Inertia::render('HomePage'); })->name('homepage');
+Route::middleware('auth.verified')->group( function() {
 
-Route::get('/s/{section}', [SectionController::class, 'show']);
+    Route::get('/homepage', function () { return Inertia::render('HomePage'); })->name('homepage');
+    Route::get('/s/{section}', [SectionController::class, 'show']);
+    
+});
 
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');

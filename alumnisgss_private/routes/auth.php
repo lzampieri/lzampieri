@@ -6,13 +6,15 @@ use Inertia\Inertia;
 
 Route::prefix('u')->group( function () {
 
-    Route::get('/register', function () { return Inertia::render('User/Register'); } );
-    Route::post('/register', [ AuthController::class, 'register' ] );
+    Route::get('/register', function () { return Inertia::render('User/Register'); } )->middleware('auth.not')->name('register');
+    Route::post('/register', [ AuthController::class, 'register' ] )->middleware('auth.not');
     
-    Route::get('/login', function () { return Inertia::render('User/Login'); } );
-    Route::post('/login', [ AuthController::class, 'login' ] );
+    Route::get('/login', function () { return Inertia::render('User/Login'); } )->middleware('auth.not')->name('login');
+    Route::post('/login', [ AuthController::class, 'login' ] )->middleware('auth.not');
 
-    Route::get('/logout', [ AuthController::class, 'logout' ] );
+    Route::get('/logout', [ AuthController::class, 'logout' ] )->name('logout');
+
+    Route::get('/unverified', function () { return Inertia::render('User/Unverified'); } )->middleware('auth.unverified')->name('unverified');
 });
 
 // use App\Http\Controllers\Auth\AuthenticatedSessionController;
