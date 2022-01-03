@@ -1,5 +1,5 @@
 import { ThemeProvider } from "@emotion/react";
-import { Box, CssBaseline, Grid } from "@mui/material";
+import { Box, Stack, CssBaseline, Grid } from "@mui/material";
 import Image from "mui-image";
 import React from "react";
 import SectionsMenu from "./Components/SectionsMenu";
@@ -11,12 +11,13 @@ export default function Layout({ children }) {
         <>
             <CssBaseline />
             <ThemeProvider theme={ theme }>
-                <Box sx={{
-                    display: 'flex', flexDirection: 'column', alignItems: 'center',
+                <Stack sx={{
+                    alignItems: 'center',
                     mx: "auto",
                     p: 3,
                     width: { sx: 1, md: 0.75 }
-                    }}>
+                    }}
+                    spacing={2} >
                     <Box sx={{ width: { sx: 1, md: 0.66 } }}>
                         <Image src={ assets_url + "/logotitolo_grigio.png"} />
                     </Box>
@@ -28,7 +29,7 @@ export default function Layout({ children }) {
                             { children }
                         </Grid>
                     </Grid>
-                </Box>
+                </Stack>
             </ThemeProvider>
         </>
     )

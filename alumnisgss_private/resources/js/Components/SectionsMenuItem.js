@@ -2,7 +2,7 @@ import { Link } from "@inertiajs/inertia-react";
 import { Button } from "@mui/material";
 
 
-export default function SectionMenuItem({ title, url }) {
+export default function SectionMenuItem({ title, url, disabled }) {
     return (
         <Button
             component={Link}
@@ -10,7 +10,8 @@ export default function SectionMenuItem({ title, url }) {
             variant="outlined"
             sx={{
                 justifyContent: 'left'
-            }}>
+            }}
+            disabled={ disabled } >
             { title }
         </Button>
     )

@@ -30,6 +30,8 @@
         "@emotion/react": "^11.7.1",
         "@emotion/styled": "^11.6.0",
         "@mui/material": "^5.2.5",
+        "markdown-to-jsx": "^7.1.5",
+        "md5": "^2.3.0",
         "mui-image": "^1.0.4"
     }
 }

@@ -15,7 +15,7 @@ class SectionController extends Controller
      */
     public function show( Section $section )
     {
-        return Inertia::render('S', [
+        return Inertia::render('Section', [
             'section' => $section,
         ]);
     }

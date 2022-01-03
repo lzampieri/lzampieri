@@ -5,12 +5,15 @@ import SectionMenuItem from "./SectionsMenuItem";
 
 
 export default function SectionsMenu() {
-    const { sections } = usePage().props;
+    const { auth, sections } = usePage().props;
     return (
         <Stack spacing={2}>
-            <SectionMenuItem title="Home" url="/" key="homepage"/> 
+            { auth && <SectionMenuItem title={ auth.name } disabled key="name"/> }
+            { !auth && <SectionMenuItem title="Login" url="/u/login" key="login"/>  }
+            { !auth && <SectionMenuItem title="Registrati" url="/u/register" key="register"/>  }
+            { auth && <SectionMenuItem title="Home" url="/" key="homepage"/>  }
             { sections.map( s => <SectionMenuItem title={ s.title } url={ "/s/" + s.shortname } key={ s.shortname } /> ) }
-            <SectionMenuItem title="Logout" url="/auth/logout" key="logout"/> 
+            { auth && <SectionMenuItem title="Logout" url="/u/logout" key="logout"/>  }
         </Stack>
     )
 }
