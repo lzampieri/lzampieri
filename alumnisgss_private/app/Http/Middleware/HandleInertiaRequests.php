@@ -35,12 +35,26 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
-        return array_merge(parent::share($request), [
-            'auth' => $request->user(),
-            'sections' => function () {
-                $verified_auth = Auth::check() && Auth::user()->email_verified_at !== null && Auth::user()->user_verified_at !== null;
-                return $verified_auth ? Section::select('shortname', 'title')->get() : [];
+        $auth = [];
+        $sections = [];
+        if( Auth::check() ) {
+            $user = Auth::user();
+            $auth = [
+                'name' => $user->name,
+                'email' => $user->email,
+                'email_verified_at' => $user->email_verified_at,
+                'user_verified_at' => $user->user_verified_at,
+                'created_at' => $user->created_at,
+                'updated_at' => $user->updated_at,
+                'permissions' => $user->getPermissionNames()
+            ];
+            if( Auth::user()->email_verified_at !== null && Auth::user()->user_verified_at !== null ) {
+                $sections = Section::select('shortname', 'title')->get();
             }
+        }
+        return array_merge(parent::share($request), [
+            'auth' => $auth,
+            'sections' => $sections
         ]);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -15,6 +16,8 @@ Route::prefix('u')->group( function () {
     Route::get('/logout', [ AuthController::class, 'logout' ] )->name('logout');
 
     Route::get('/unverified', function () { return Inertia::render('User/Unverified'); } )->middleware('auth.unverified')->name('unverified');
+
+    Route::get('/edit',  [ UserController::class, 'list'] )->can('edit users');
 });
 
 // use App\Http\Controllers\Auth\AuthenticatedSessionController;
