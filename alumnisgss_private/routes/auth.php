@@ -17,7 +17,8 @@ Route::prefix('u')->group( function () {
 
     Route::get('/unverified', function () { return Inertia::render('User/Unverified'); } )->middleware('auth.unverified')->name('unverified');
 
-    Route::get('/edit',  [ UserController::class, 'list'] )->can('edit users');
+    Route::get('/edit',  [ UserController::class, 'list'] )->can('edit users')->name('user.edit');
+    Route::post('/edit/perms',  [ UserController::class, 'edit_perms'] )->can('edit users');
 });
 
 // use App\Http\Controllers\Auth\AuthenticatedSessionController;

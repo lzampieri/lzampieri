@@ -6,7 +6,6 @@ import SectionMenuItem from "./SectionsMenuItem";
 
 export default function SectionsMenu() {
     const { auth, sections } = usePage().props;
-    console.log( auth );
     return (
         <Stack spacing={2}>
             { auth && <SectionMenuItem title={ auth.name } disabled key="name"/> }
