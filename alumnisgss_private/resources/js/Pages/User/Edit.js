@@ -92,9 +92,22 @@ function UserItem({ user, permissions, me }) {
                             todo: true
                             }}
                         key={ 'email_verification' } />
-                    { user.user_verified_at ?
-                        <Chip color="success" label={ "Identità verificata il " + pD(user.user_verified_at) } /> :
-                        <Chip color="warning" label="Identità non verificata" /> }
+                    <SnackbarClickableChip
+                        chipProps = {{
+                            color: user.user_verified_at ? "success" : "error",
+                            label: user.user_verified_at ? "Identità verificata il " + pD(user.user_verified_at) : "Identità non verificata"
+                            }}
+                        dialogTitle = { user.user_verified_at ? "Revocare verifica?" : "Verificare l'identità?" }
+                        dialogText = { user.user_verified_at ?
+                            <>Revocare la validazione dell'identità dell'utente { user.name }?</> :
+                            <>Validare l'identità dell'utente { user.name }?<br/>Nota: questa operazione permetterà all'utente l'accesso al sito. Dovrebbe essere effettuata dopo aver acquisito un documento d'identità.</>
+                            }
+                        confirmButtonText = { user.user_verified_at ? "Revoca" : "Valida" }
+                        postUrl = '/todo'
+                        postData = {{
+                            todo: true
+                            }}
+                        key={ 'identity_verification' } />
                 </Stack>
                 <Stack direction="row" alignItems="center" spacing={1}>
                     <b>Permessi: </b>

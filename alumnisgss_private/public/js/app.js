@@ -27769,13 +27769,23 @@ function UserItem(_ref3) {
           postData: {
             todo: true
           }
-        }, 'email_verification'), user.user_verified_at ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_6__["default"], {
-          color: "success",
-          label: "Identità verificata il " + pD(user.user_verified_at)
-        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_6__["default"], {
-          color: "warning",
-          label: "Identit\xE0 non verificata"
-        })]
+        }, 'email_verification'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(SnackbarClickableChip, {
+          chipProps: {
+            color: user.user_verified_at ? "success" : "error",
+            label: user.user_verified_at ? "Identità verificata il " + pD(user.user_verified_at) : "Identità non verificata"
+          },
+          dialogTitle: user.user_verified_at ? "Revocare verifica?" : "Verificare l'identità?",
+          dialogText: user.user_verified_at ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+            children: ["Revocare la validazione dell'identit\xE0 dell'utente ", user.name, "?"]
+          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+            children: ["Validare l'identit\xE0 dell'utente ", user.name, "?", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("br", {}), "Nota: questa operazione permetter\xE0 all'utente l'accesso al sito. Dovrebbe essere effettuata dopo aver acquisito un documento d'identit\xE0."]
+          }),
+          confirmButtonText: user.user_verified_at ? "Revoca" : "Valida",
+          postUrl: "/todo",
+          postData: {
+            todo: true
+          }
+        }, 'identity_verification')]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_17__["default"], {
         direction: "row",
         alignItems: "center",
