@@ -19,6 +19,8 @@ Route::prefix('u')->group( function () {
 
     Route::get('/edit',  [ UserController::class, 'list'] )->can('edit users')->name('user.edit');
     Route::post('/edit/perms',  [ UserController::class, 'edit_perms'] )->can('edit users');
+    Route::post('/edit/email',  [ UserController::class, 'edit_email'] )->can('edit users');
+    Route::post('/edit/identity',  [ UserController::class, 'edit_identity'] )->can('edit users');
 });
 
 // use App\Http\Controllers\Auth\AuthenticatedSessionController;

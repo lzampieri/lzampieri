@@ -54,4 +54,52 @@ class UserController extends Controller
         
         return Redirect::route('user.edit');
     }
+
+    public function edit_email(Request $request)
+    {
+        $request->validate([
+            'valid' => 'required|boolean',
+            'user' => 'required|exists:users,id',
+        ]);
+        
+        if( $request->user == Auth::user()->id ) {
+            return Redirect::back()->withErrors(['user' => __('validation.notmyself')]);
+        }
+
+        $user = User::find( $request->user );
+        
+        if( $request->valid ) {
+            $user->email_verified_at = date("Y-m-d H:i:s");
+        } else {
+            $user->email_verified_at = NULL;
+        }
+
+        $user->save();
+        
+        return Redirect::route('user.edit');
+    }
+
+    public function edit_identity(Request $request)
+    {
+        $request->validate([
+            'valid' => 'required|boolean',
+            'user' => 'required|exists:users,id',
+        ]);
+        
+        if( $request->user == Auth::user()->id ) {
+            return Redirect::back()->withErrors(['user' => __('validation.notmyself')]);
+        }
+
+        $user = User::find( $request->user );
+        
+        if( $request->valid ) {
+            $user->user_verified_at = date("Y-m-d H:i:s");
+        } else {
+            $user->user_verified_at = NULL;
+        }
+
+        $user->save();
+        
+        return Redirect::route('user.edit');
+    }
 }

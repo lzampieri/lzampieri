@@ -87,9 +87,10 @@ function UserItem({ user, permissions, me }) {
                             <>Revocare la validazione dell'indirizzo mail dell'utente { user.name }?<br/>Verrà inviato all'utente un nuovo link di verifica.</> :
                             <>Validare l'indirizzo mail dell'utente { user.name }?<br/>Nota: questa operazione dovrebbe di norma venire fatta autonomamente dall'utente, tramite un link che riceve via mail.</>                        }
                         confirmButtonText = { user.email_verified_at ? "Revoca" : "Valida" }
-                        postUrl = '/todo'
+                        postUrl = '/u/edit/email'
                         postData = {{
-                            todo: true
+                            user: user.id,
+                            valid: user.email_verified_at ? false : true
                             }}
                         key={ 'email_verification' } />
                     <SnackbarClickableChip
@@ -103,9 +104,10 @@ function UserItem({ user, permissions, me }) {
                             <>Validare l'identità dell'utente { user.name }?<br/>Nota: questa operazione permetterà all'utente l'accesso al sito. Dovrebbe essere effettuata dopo aver acquisito un documento d'identità.</>
                             }
                         confirmButtonText = { user.user_verified_at ? "Revoca" : "Valida" }
-                        postUrl = '/todo'
+                        postUrl = '/u/edit/identity'
                         postData = {{
-                            todo: true
+                            user: user.id,
+                            valid: user.user_verified_at ? false : true
                             }}
                         key={ 'identity_verification' } />
                 </Stack>

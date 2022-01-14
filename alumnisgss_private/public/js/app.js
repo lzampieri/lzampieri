@@ -27765,9 +27765,10 @@ function UserItem(_ref3) {
             children: ["Validare l'indirizzo mail dell'utente ", user.name, "?", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("br", {}), "Nota: questa operazione dovrebbe di norma venire fatta autonomamente dall'utente, tramite un link che riceve via mail."]
           }),
           confirmButtonText: user.email_verified_at ? "Revoca" : "Valida",
-          postUrl: "/todo",
+          postUrl: "/u/edit/email",
           postData: {
-            todo: true
+            user: user.id,
+            valid: user.email_verified_at ? false : true
           }
         }, 'email_verification'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(SnackbarClickableChip, {
           chipProps: {
@@ -27781,9 +27782,10 @@ function UserItem(_ref3) {
             children: ["Validare l'identit\xE0 dell'utente ", user.name, "?", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("br", {}), "Nota: questa operazione permetter\xE0 all'utente l'accesso al sito. Dovrebbe essere effettuata dopo aver acquisito un documento d'identit\xE0."]
           }),
           confirmButtonText: user.user_verified_at ? "Revoca" : "Valida",
-          postUrl: "/todo",
+          postUrl: "/u/edit/identity",
           postData: {
-            todo: true
+            user: user.id,
+            valid: user.user_verified_at ? false : true
           }
         }, 'identity_verification')]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_17__["default"], {
