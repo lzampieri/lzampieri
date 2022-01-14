@@ -3,6 +3,8 @@ import { Alert, Button, Chip, Dialog, DialogActions, DialogContent, DialogConten
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { Link, usePage } from "@inertiajs/inertia-react";
 import { Component } from "react";
+import { SnackbarProvider, withSnackbar } from 'notistack';
+import { Inertia } from "@inertiajs/inertia";
 
 function pD( date ) {
     return ( new Date( date )).toLocaleDateString("it-IT");
@@ -24,6 +26,21 @@ class PermissionChip extends Component {
         this.setState({ dialog_open: false });
     }
 
+    savePerm() {
+        this.setState({ dialog_open: false });
+        Inertia.post( public_url + '/u/edit/perms',
+            { should_have: !this.props.hasIt, user: this.props.uid, perm: this.props.pname },
+            {
+                onError: ( errors ) =>
+                    Object.entries( errors ).map( ([ key, value ]) => 
+                        this.props.enqueueSnackbar( key + ": " + value, {variant: 'error'})
+                    ),
+                onSuccess: () =>
+                    this.props.enqueueSnackbar( "Fatto", {variant: 'success'})
+            }
+        );
+    }
+
     render() {
         return (
             <>
@@ -43,9 +60,7 @@ class PermissionChip extends Component {
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={ () => this.dismissDialog() }>Annulla</Button>
-                        <Button component={ Link }
-                            href={ public_url + '/u/edit/perms' } method="post"
-                            data={{ should_have: !this.props.hasIt, user: this.props.uid, perm: this.props.pname }}>
+                        <Button onClick={ () => this.savePerm() }>
                             { this.props.hasIt ? "Revoca" : "Assegna" }
                         </Button>
                     </DialogActions>
@@ -54,6 +69,8 @@ class PermissionChip extends Component {
         )
     }
 }
+
+const SnackbarPermissionChip = withSnackbar( PermissionChip );
 
 function UserItem({ user, permissions, me }) {
     return (
@@ -73,7 +90,7 @@ function UserItem({ user, permissions, me }) {
                 <Stack direction="row" alignItems="center" spacing={1}>
                     <b>Permessi: </b>
                     { permissions.map( p =>
-                        <PermissionChip key={ p.name } pname={ p.name } uid={ user.id } uname={ user.name } hasIt={ user.permissions.includes(p.name) } />
+                        <SnackbarPermissionChip key={ p.name } pname={ p.name } uid={ user.id } uname={ user.name } hasIt={ user.permissions.includes(p.name) } />
                     )}
                 </Stack>
             </Stack>
@@ -85,7 +102,9 @@ export default function Edit({ users, permissions }) {
     const { auth } = usePage().props;
     return (
         <Layout>
+        <SnackbarProvider>
             <List>{ users.map( u => <UserItem key={ u.id } user={u} permissions={permissions} me={ u.id == auth.id } /> ) }</List>
+        </SnackbarProvider>
         </Layout>
     )
 }

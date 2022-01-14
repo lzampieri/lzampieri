@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Permission;
 
@@ -34,15 +35,23 @@ class UserController extends Controller
     {
         $request->validate([
             'should_have' => 'required|boolean',
-            'user' => 'required|exists:user,id',
+            'user' => 'required|exists:users,id',
             'perm' => 'required|exists:permissions,name'
         ]);
+        
+        if( $request->user == Auth::user()->id ) {
+            return Redirect::back()->withErrors(['user' => __('validation.notmyself')]);
+        }
 
-        $user = User::first( $request->user );
-        if( $user == Auth::user() ) {
-            return redirect()->route('user.edit');
+        $user = User::find( $request->user );
+        $perm = $request->perm;
+
+        if( $request->should_have ) {
+            $user->givePermissionTo( $perm );
+        } else {
+            $user->revokePermissionTo( $perm );
         }
         
-        // Todo
+        return Redirect::route('user.edit');
     }
 }

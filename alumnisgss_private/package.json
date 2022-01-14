@@ -33,6 +33,7 @@
         "@mui/material": "^5.2.5",
         "markdown-to-jsx": "^7.1.5",
         "md5": "^2.3.0",
-        "mui-image": "^1.0.4"
+        "mui-image": "^1.0.4",
+        "notistack": "^2.0.3"
     }
 }
