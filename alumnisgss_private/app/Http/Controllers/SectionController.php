@@ -17,6 +17,7 @@ class SectionController extends Controller
     public function show( $section_id )
     {
         $section = Section::withTrashed()->findOrFail( $section_id );
+        $section['trashed'] = $section->trashed();
         if( $section->reserved )
             Auth::user()->can('access reserved sections') || abort(403);
         if( $section->trashed() )

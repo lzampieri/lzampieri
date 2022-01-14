@@ -51,9 +51,9 @@ class HandleInertiaRequests extends Middleware
             ];
             if( Auth::user()->email_verified_at !== null && Auth::user()->user_verified_at !== null ) {
                 if( Auth::user()->can('edit sections') )
-                    $sections = Section::withTrashed()->select('shortname', 'title')->get();
+                    $sections = Section::withTrashed()->select('shortname', 'title', 'reserved', 'deleted_at')->get();
                 else if( Auth::user()->can('access reserved sections') )
-                    $sections = Section::select('shortname', 'title')->get();
+                    $sections = Section::select('shortname', 'title', 'reserved')->get();
                 else
                     $sections = Section::where('reserved',False)->select('shortname', 'title')->get();
             }
