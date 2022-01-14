@@ -27570,6 +27570,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -27617,15 +27623,15 @@ function pD(date) {
   return new Date(date).toLocaleDateString("it-IT");
 }
 
-var PermissionChip = /*#__PURE__*/function (_Component) {
-  _inherits(PermissionChip, _Component);
+var ClickableChip = /*#__PURE__*/function (_Component) {
+  _inherits(ClickableChip, _Component);
 
-  var _super = _createSuper(PermissionChip);
+  var _super = _createSuper(ClickableChip);
 
-  function PermissionChip(props) {
+  function ClickableChip(props) {
     var _this;
 
-    _classCallCheck(this, PermissionChip);
+    _classCallCheck(this, ClickableChip);
 
     _this = _super.call(this, props);
     _this.state = {
@@ -27634,7 +27640,7 @@ var PermissionChip = /*#__PURE__*/function (_Component) {
     return _this;
   }
 
-  _createClass(PermissionChip, [{
+  _createClass(ClickableChip, [{
     key: "openDialog",
     value: function openDialog() {
       this.setState({
@@ -27656,11 +27662,7 @@ var PermissionChip = /*#__PURE__*/function (_Component) {
       this.setState({
         dialog_open: false
       });
-      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_4__.Inertia.post(public_url + '/u/edit/perms', {
-        should_have: !this.props.hasIt,
-        user: this.props.uid,
-        perm: this.props.pname
-      }, {
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_4__.Inertia.post(public_url + this.props.postUrl, this.props.postData, {
         onError: function onError(errors) {
           return Object.entries(errors).map(function (_ref) {
             var _ref2 = _slicedToArray(_ref, 2),
@@ -27685,31 +27687,20 @@ var PermissionChip = /*#__PURE__*/function (_Component) {
       var _this3 = this;
 
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
-        children: [this.props.hasIt ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_6__["default"], {
-          color: "success",
-          label: this.props.pname,
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_6__["default"], _objectSpread(_objectSpread({}, this.props.chipProps), {}, {
           onClick: function onClick() {
             return _this3.openDialog();
           }
-        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_6__["default"], {
-          variant: "outlined",
-          color: "error",
-          label: this.props.pname,
-          onClick: function onClick() {
-            return _this3.openDialog();
-          }
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_7__["default"], {
+        })), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_7__["default"], {
           open: this.state.dialog_open,
           onClose: function onClose() {
             return _this3.dismissDialog();
           },
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_8__["default"], {
-            children: [this.props.hasIt ? "Revocare " : "Assegnare ", " il permesso?"]
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_8__["default"], {
+            children: this.props.dialogTitle
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_9__["default"], {
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_10__["default"], {
-              children: [this.props.hasIt ? "Revocare " : "Assegnare ", " il permesso ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
-                children: this.props.pname
-              }), " all'utente ", this.props.uname, "?"]
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_10__["default"], {
+              children: this.props.dialogText
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_11__["default"], {
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_12__["default"], {
@@ -27721,7 +27712,7 @@ var PermissionChip = /*#__PURE__*/function (_Component) {
               onClick: function onClick() {
                 return _this3.savePerm();
               },
-              children: this.props.hasIt ? "Revoca" : "Assegna"
+              children: this.props.confirmButtonText
             })]
           })]
         })]
@@ -27729,10 +27720,10 @@ var PermissionChip = /*#__PURE__*/function (_Component) {
     }
   }]);
 
-  return PermissionChip;
+  return ClickableChip;
 }(react__WEBPACK_IMPORTED_MODULE_2__.Component);
 
-var SnackbarPermissionChip = (0,notistack__WEBPACK_IMPORTED_MODULE_3__.withSnackbar)(PermissionChip);
+var SnackbarClickableChip = (0,notistack__WEBPACK_IMPORTED_MODULE_3__.withSnackbar)(ClickableChip);
 
 function UserItem(_ref3) {
   var user = _ref3.user,
@@ -27762,13 +27753,23 @@ function UserItem(_ref3) {
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_17__["default"], {
         direction: "row",
         spacing: 1,
-        children: [user.email_verified_at ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_6__["default"], {
-          color: "success",
-          label: "Email verificata il " + pD(user.email_verified_at)
-        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_6__["default"], {
-          color: "warning",
-          label: "Email non verificata"
-        }), user.user_verified_at ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(SnackbarClickableChip, {
+          chipProps: {
+            color: user.email_verified_at ? "success" : "error",
+            label: user.email_verified_at ? "Email verificata il " + pD(user.email_verified_at) : "Email non verificata"
+          },
+          dialogTitle: user.email_verified_at ? "Revocare verifica?" : "Verificare indirizzo mail?",
+          dialogText: user.email_verified_at ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+            children: ["Revocare la validazione dell'indirizzo mail dell'utente ", user.name, "?", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("br", {}), "Verr\xE0 inviato all'utente un nuovo link di verifica."]
+          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+            children: ["Validare l'indirizzo mail dell'utente ", user.name, "?", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("br", {}), "Nota: questa operazione dovrebbe di norma venire fatta autonomamente dall'utente, tramite un link che riceve via mail."]
+          }),
+          confirmButtonText: user.email_verified_at ? "Revoca" : "Valida",
+          postUrl: "/todo",
+          postData: {
+            todo: true
+          }
+        }, 'email_verification'), user.user_verified_at ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_6__["default"], {
           color: "success",
           label: "Identità verificata il " + pD(user.user_verified_at)
         }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_6__["default"], {
@@ -27782,12 +27783,27 @@ function UserItem(_ref3) {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("b", {
           children: "Permessi: "
         }), permissions.map(function (p) {
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(SnackbarPermissionChip, {
-            pname: p.name,
-            uid: user.id,
-            uname: user.name,
-            hasIt: user.permissions.includes(p.name)
-          }, p.name);
+          var hasIt = user.permissions.includes(p.name);
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(SnackbarClickableChip, {
+            chipProps: {
+              variant: hasIt ? "filled" : "outlined",
+              color: hasIt ? "success" : "error",
+              label: p.name
+            },
+            dialogTitle: hasIt ? "Revocare il permesso?" : "Assegnare il permesso?",
+            dialogText: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+              children: [" ", hasIt ? "Revocare " : "Assegnare ", " il permesso ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                children: p.name
+              }), " all'utente ", user.name, "?"]
+            }),
+            confirmButtonText: hasIt ? "Revoca" : "Assegna",
+            postUrl: "/u/edit/perms",
+            postData: {
+              should_have: !hasIt,
+              user: user.id,
+              perm: p.name
+            }
+          }, p.name + "_" + user.email);
         })]
       })]
     })]

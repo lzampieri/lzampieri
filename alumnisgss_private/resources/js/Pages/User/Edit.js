@@ -10,7 +10,7 @@ function pD( date ) {
     return ( new Date( date )).toLocaleDateString("it-IT");
 }
 
-class PermissionChip extends Component {
+class ClickableChip extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -28,8 +28,8 @@ class PermissionChip extends Component {
 
     savePerm() {
         this.setState({ dialog_open: false });
-        Inertia.post( public_url + '/u/edit/perms',
-            { should_have: !this.props.hasIt, user: this.props.uid, perm: this.props.pname },
+        Inertia.post( public_url + this.props.postUrl,
+            this.props.postData,
             {
                 onError: ( errors ) =>
                     Object.entries( errors ).map( ([ key, value ]) => 
@@ -44,24 +44,21 @@ class PermissionChip extends Component {
     render() {
         return (
             <>
-                { this.props.hasIt ? 
-                    <Chip color="success" label={ this.props.pname } onClick={ () => this.openDialog() } /> :
-                    <Chip variant="outlined" color="error" label={ this.props.pname } onClick={ () => this.openDialog() } />
-                }
+                <Chip {...this.props.chipProps} onClick={ () => this.openDialog() } />
                 <Dialog
                     open={ this.state.dialog_open }
                     onClose={ () => this.dismissDialog() }
                 >
-                    <DialogTitle>{ this.props.hasIt ? "Revocare " : "Assegnare "} il permesso?</DialogTitle>
+                    <DialogTitle>{ this.props.dialogTitle }</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            { this.props.hasIt ? "Revocare " : "Assegnare "} il permesso <i>{ this.props.pname }</i> all'utente { this.props.uname }?
+                            { this.props.dialogText }
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={ () => this.dismissDialog() }>Annulla</Button>
                         <Button onClick={ () => this.savePerm() }>
-                            { this.props.hasIt ? "Revoca" : "Assegna" }
+                            { this.props.confirmButtonText }
                         </Button>
                     </DialogActions>
                 </Dialog>
@@ -70,7 +67,7 @@ class PermissionChip extends Component {
     }
 }
 
-const SnackbarPermissionChip = withSnackbar( PermissionChip );
+const SnackbarClickableChip = withSnackbar( ClickableChip );
 
 function UserItem({ user, permissions, me }) {
     return (
@@ -80,18 +77,46 @@ function UserItem({ user, permissions, me }) {
                 <Typography variant="caption">Registrato il { pD(user.created_at) }</Typography>
                 <Typography variant="h6">{ me && <Chip color="info" label="Tu" /> }<b> { user.name }</b> { user.email }</Typography>
                 <Stack direction="row" spacing={1}>
-                    { user.email_verified_at ?
-                        <Chip color="success" label={ "Email verificata il " + pD(user.email_verified_at) } /> :
-                        <Chip color="warning" label="Email non verificata" /> }
+                    <SnackbarClickableChip
+                        chipProps = {{
+                            color: user.email_verified_at ? "success" : "error",
+                            label: user.email_verified_at ? "Email verificata il " + pD(user.email_verified_at) : "Email non verificata"
+                            }}
+                        dialogTitle = { user.email_verified_at ? "Revocare verifica?" : "Verificare indirizzo mail?" }
+                        dialogText = { user.email_verified_at ?
+                            <>Revocare la validazione dell'indirizzo mail dell'utente { user.name }?<br/>Verrà inviato all'utente un nuovo link di verifica.</> :
+                            <>Validare l'indirizzo mail dell'utente { user.name }?<br/>Nota: questa operazione dovrebbe di norma venire fatta autonomamente dall'utente, tramite un link che riceve via mail.</>                        }
+                        confirmButtonText = { user.email_verified_at ? "Revoca" : "Valida" }
+                        postUrl = '/todo'
+                        postData = {{
+                            todo: true
+                            }}
+                        key={ 'email_verification' } />
                     { user.user_verified_at ?
                         <Chip color="success" label={ "Identità verificata il " + pD(user.user_verified_at) } /> :
                         <Chip color="warning" label="Identità non verificata" /> }
                 </Stack>
                 <Stack direction="row" alignItems="center" spacing={1}>
                     <b>Permessi: </b>
-                    { permissions.map( p =>
-                        <SnackbarPermissionChip key={ p.name } pname={ p.name } uid={ user.id } uname={ user.name } hasIt={ user.permissions.includes(p.name) } />
-                    )}
+                    { permissions.map( p => {
+                        let hasIt = user.permissions.includes(p.name);
+                        return <SnackbarClickableChip
+                            chipProps = {{
+                                variant: hasIt ? "filled" : "outlined",
+                                color: hasIt ? "success" : "error",
+                                label: p.name
+                                }}
+                            dialogTitle = { hasIt ? "Revocare il permesso?" : "Assegnare il permesso?"}
+                            dialogText = { <> {hasIt ? "Revocare " : "Assegnare "} il permesso <i>{p.name}</i> all'utente {user.name}?</> }
+                            confirmButtonText = { hasIt ? "Revoca" : "Assegna" }
+                            postUrl = '/u/edit/perms'
+                            postData = {{
+                                should_have: !hasIt,
+                                user: user.id,
+                                perm: p.name
+                                }}
+                            key={ p.name + "_" + user.email } />
+                    })}
                 </Stack>
             </Stack>
         </ListItem>
