@@ -36,18 +36,27 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Create permissions
+        Permission::create(['name' => 'access reserved sections']);
         Permission::create(['name' => 'edit sections']);
         Permission::create(['name' => 'edit users']);
 
         // Assign permission to admin
+        $admin->givePermissionTo('access reserved sections');
         $admin->givePermissionTo('edit sections');
         $admin->givePermissionTo('edit users');
 
         // Create example section
         Section::create([
+            'reserved' => False,
             'shortname' => 'section1',
             'title' => 'Sezione 1',
             'content' => 'Contenuto sezione 1'
+        ]);
+        Section::create([
+            'reserved' => True,
+            'shortname' => 'section_res',
+            'title' => 'Sezione riservata',
+            'content' => 'Contenuto sezione riservata'
         ]);
     }
 }

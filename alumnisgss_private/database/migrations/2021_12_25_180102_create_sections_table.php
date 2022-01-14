@@ -15,6 +15,8 @@ class CreateSectionsTable extends Migration
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->timestamps();
+            $table->softDeletes();
+            $table->boolean('reserved');
             $table->string('shortname',25);
             $table->string('title',255);
             $table->longText('content');

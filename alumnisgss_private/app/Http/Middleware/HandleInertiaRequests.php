@@ -50,7 +50,12 @@ class HandleInertiaRequests extends Middleware
                 'permissions' => $user->getPermissionNames()
             ];
             if( Auth::user()->email_verified_at !== null && Auth::user()->user_verified_at !== null ) {
-                $sections = Section::select('shortname', 'title')->get();
+                if( Auth::user()->can('edit sections') )
+                    $sections = Section::withTrashed()->select('shortname', 'title')->get();
+                else if( Auth::user()->can('access reserved sections') )
+                    $sections = Section::select('shortname', 'title')->get();
+                else
+                    $sections = Section::where('reserved',False)->select('shortname', 'title')->get();
             }
         }
         return array_merge(parent::share($request), [
