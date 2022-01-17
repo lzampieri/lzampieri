@@ -2,22 +2,29 @@ import Layout from "@/Layout";
 import React from "react";
 import MarkdownParser from "@/Components/MarkdownParser";
 import { Box } from "@mui/system";
-import { Alert } from "@mui/material";
-import { DeleteOutline, Security } from "@mui/icons-material";
+import { Button, Typography } from "@mui/material";
+import { Link, usePage } from "@inertiajs/inertia-react";
+import SectionChip from "@/Components/SectionChip";
+import { Edit } from "@mui/icons-material";
 
 
 export default function Section( {section} ) {
+    const { auth } = usePage().props;
+    var can_edit_section = Boolean( auth && auth.permissions.includes( "edit sections" ) );
     return (
         <Layout>
             <Box sx={{ p: 3, border: 1, borderRadius: 2 }}>
-                { section.reserved == 1 && <Alert variant="outlined" severity="info" icon={<Security />}>
-                    Questa è una sezione riservata, visibile solo agli utenti specificatamente abilitati.
-                </Alert> }
-                { section.trashed && <Alert variant="outlined" severity="error" icon={<DeleteOutline />}>
-                    Questa è una sezione eliminata, visibile solo agli amministratori.
-                </Alert> }
+                { can_edit_section && <SectionChip section={ section } /> }
+                { can_edit_section && <Button
+                    component={Link}
+                    href={ public_url + "/s/" + section.shortname + "/edit" }
+                    color="info"
+                    variant="outlined"
+                    startIcon={ <Edit /> }>
+                        Modifica
+                    </Button> }
+                <Typography variant="h4">{ section.title }</Typography>
                 <MarkdownParser>
-                    #{ section.title } {'\n'}
                     { section.content }
                 </MarkdownParser>
             </Box>

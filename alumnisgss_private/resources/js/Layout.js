@@ -1,6 +1,7 @@
 import { ThemeProvider } from "@emotion/react";
 import { Box, Stack, CssBaseline, Grid } from "@mui/material";
 import Image from "mui-image";
+import { SnackbarProvider } from "notistack";
 import React from "react";
 import SectionsMenu from "./Components/SectionsMenu";
 import theme from "./theme";
@@ -11,6 +12,7 @@ export default function Layout({ children }) {
         <>
             <CssBaseline />
             <ThemeProvider theme={ theme }>
+            <SnackbarProvider>
                 <Stack sx={{
                     alignItems: 'center',
                     mx: "auto",
@@ -30,6 +32,7 @@ export default function Layout({ children }) {
                         </Grid>
                     </Grid>
                 </Stack>
+            </SnackbarProvider>
             </ThemeProvider>
         </>
     )

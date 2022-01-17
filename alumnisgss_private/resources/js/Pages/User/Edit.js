@@ -1,73 +1,12 @@
 import Layout from "@/Layout";
-import { Alert, Button, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, List, ListItem, ListItemIcon, Paper, Stack, Typography } from "@mui/material";
+import { Chip, List, ListItem, ListItemIcon, Paper, Stack, Typography } from "@mui/material";
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import { Link, usePage } from "@inertiajs/inertia-react";
-import { Component } from "react";
-import { SnackbarProvider, withSnackbar } from 'notistack';
-import { Inertia } from "@inertiajs/inertia";
+import { usePage } from "@inertiajs/inertia-react";
+import ClickableChip from "@/Components/ClickableChip";
 
 function pD( date ) {
     return ( new Date( date )).toLocaleDateString("it-IT");
 }
-
-class ClickableChip extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            dialog_open: false
-        }
-    }
-
-    openDialog() {
-        this.setState({ dialog_open: true });
-    }
-
-    dismissDialog() {
-        this.setState({ dialog_open: false });
-    }
-
-    savePerm() {
-        this.setState({ dialog_open: false });
-        Inertia.post( public_url + this.props.postUrl,
-            this.props.postData,
-            {
-                onError: ( errors ) =>
-                    Object.entries( errors ).map( ([ key, value ]) => 
-                        this.props.enqueueSnackbar( key + ": " + value, {variant: 'error'})
-                    ),
-                onSuccess: () =>
-                    this.props.enqueueSnackbar( "Fatto", {variant: 'success'})
-            }
-        );
-    }
-
-    render() {
-        return (
-            <>
-                <Chip {...this.props.chipProps} onClick={ () => this.openDialog() } />
-                <Dialog
-                    open={ this.state.dialog_open }
-                    onClose={ () => this.dismissDialog() }
-                >
-                    <DialogTitle>{ this.props.dialogTitle }</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>
-                            { this.props.dialogText }
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={ () => this.dismissDialog() }>Annulla</Button>
-                        <Button onClick={ () => this.savePerm() }>
-                            { this.props.confirmButtonText }
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-            </>
-        )
-    }
-}
-
-const SnackbarClickableChip = withSnackbar( ClickableChip );
 
 function UserItem({ user, permissions, me }) {
     return (
@@ -77,7 +16,7 @@ function UserItem({ user, permissions, me }) {
                 <Typography variant="caption">Registrato il { pD(user.created_at) }</Typography>
                 <Typography variant="h6">{ me && <Chip color="info" label="Tu" /> }<b> { user.name }</b> { user.email }</Typography>
                 <Stack direction="row" spacing={1}>
-                    <SnackbarClickableChip
+                    <ClickableChip
                         chipProps = {{
                             color: user.email_verified_at ? "success" : "error",
                             label: user.email_verified_at ? "Email verificata il " + pD(user.email_verified_at) : "Email non verificata"
@@ -93,7 +32,7 @@ function UserItem({ user, permissions, me }) {
                             valid: user.email_verified_at ? false : true
                             }}
                         key={ 'email_verification' } />
-                    <SnackbarClickableChip
+                    <ClickableChip
                         chipProps = {{
                             color: user.user_verified_at ? "success" : "error",
                             label: user.user_verified_at ? "Identità verificata il " + pD(user.user_verified_at) : "Identità non verificata"
@@ -115,7 +54,7 @@ function UserItem({ user, permissions, me }) {
                     <b>Permessi: </b>
                     { permissions.map( p => {
                         let hasIt = user.permissions.includes(p.name);
-                        return <SnackbarClickableChip
+                        return <ClickableChip
                             chipProps = {{
                                 variant: hasIt ? "filled" : "outlined",
                                 color: hasIt ? "success" : "error",
@@ -142,9 +81,7 @@ export default function Edit({ users, permissions }) {
     const { auth } = usePage().props;
     return (
         <Layout>
-        <SnackbarProvider>
             <List>{ users.map( u => <UserItem key={ u.id } user={u} permissions={permissions} me={ u.id == auth.id } /> ) }</List>
-        </SnackbarProvider>
         </Layout>
     )
 }
