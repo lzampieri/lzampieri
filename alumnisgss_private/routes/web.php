@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\FileController;
+use App\Http\Controllers\SectionController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-use App\Http\Controllers\SectionController;
 
 Route::get('/', function () { return redirect('/homepage'); });
 
@@ -15,6 +16,7 @@ Route::middleware('auth.verified')->group( function() {
 
     Route::get('/s/{section}/edit', [SectionController::class, 'edit'])->can('edit sections');
     Route::post('/s/{section}/edit', [SectionController::class, 'save'])->can('edit sections');
+    Route::post('/s/{section}/upload', [FileController::class, 'upload'])->can('edit sections');
     Route::post('/s/{section}/reserved', [SectionController::class, 'reserved'])->can('edit sections');
     Route::post('/s/{section}/trashed', [SectionController::class, 'trashed'])->can('edit sections');
 

@@ -27876,20 +27876,17 @@ function EditSection(_ref) {
   var section = _ref.section;
   var auth = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_3__.usePage)().props.auth;
   var form = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_3__.useForm)({
-    shortname: section.shortname,
     title: section.title,
     content: section.content
   });
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Layout__WEBPACK_IMPORTED_MODULE_0__["default"], {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mui_system__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_system__WEBPACK_IMPORTED_MODULE_7__["default"], {
       sx: {
         p: 3,
         border: 1,
         borderRadius: 2
       },
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_SectionChip__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        section: section
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_8__["default"], {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_8__["default"], {
         component: "form",
         onSubmit: function onSubmit(e) {
           e.preventDefault();
@@ -27905,10 +27902,6 @@ function EditSection(_ref) {
           children: "Salva"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_FormComponents__WEBPACK_IMPORTED_MODULE_5__.Field, {
           form: form,
-          name: "shortname",
-          label: "Nome breve"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_FormComponents__WEBPACK_IMPORTED_MODULE_5__.Field, {
-          form: form,
           name: "title",
           label: "Titolo"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_FormComponents__WEBPACK_IMPORTED_MODULE_5__.Field, {
@@ -27922,7 +27915,7 @@ function EditSection(_ref) {
           },
           children: "\n                        Alcune indicazioni per scrivere:\n                        *Testo corsivo*\n                        **Testo in grassetto**\n                        ***Testo in corsivo e grassetto***\n                        ~~Testo barrato~~\n                        # Titolo\n                        ## Sottotitolo\n                        ### Titoletto\n                        - Elenco puntato\n                        1. Elenco numerato\n                        [Testo del link](url a cui puntare)\n                        ![](url di una immagine)\n                        "
         })]
-      })]
+      })
     })
   });
 }
@@ -27985,9 +27978,34 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function Section(_ref) {
+
+function FileUploader(_ref) {
   var section = _ref.section;
+  var form = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_3__.useForm)({
+    thefile: ""
+  });
+  console.log(form.errors);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("form", {
+    onSubmit: function onSubmit(e) {
+      e.preventDefault();
+      form.post(public_url + "/s/" + section.shortname + "/upload");
+    },
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+      type: "file",
+      onChange: function onChange(e) {
+        return form.setData('thefile', e.target.files[0]);
+      }
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+      type: "submit",
+      children: "Submit"
+    })]
+  });
+}
+
+function Section(_ref2) {
+  var section = _ref2.section;
   var auth = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_3__.usePage)().props.auth;
+  console.log(section);
   var can_edit_section = Boolean(auth && auth.permissions.includes("edit sections"));
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Layout__WEBPACK_IMPORTED_MODULE_0__["default"], {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mui_system__WEBPACK_IMPORTED_MODULE_6__["default"], {
@@ -28004,12 +28022,14 @@ function Section(_ref) {
         color: "info",
         variant: "outlined",
         startIcon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_icons_material__WEBPACK_IMPORTED_MODULE_8__["default"], {}),
-        children: "Modifica"
+        children: "Modifica testi"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_9__["default"], {
         variant: "h4",
         children: section.title
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_MarkdownParser__WEBPACK_IMPORTED_MODULE_2__["default"], {
         children: section.content
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(FileUploader, {
+        section: section
       })]
     })
   });

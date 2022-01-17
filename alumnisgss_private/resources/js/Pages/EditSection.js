@@ -11,7 +11,6 @@ import { Save } from "@mui/icons-material";
 export default function EditSection( {section} ) {
     const { auth } = usePage().props;
     const form = useForm({
-        shortname: section.shortname,
         title: section.title,
         content: section.content
       });
@@ -19,7 +18,6 @@ export default function EditSection( {section} ) {
     return (
         <Layout>
             <Box sx={{ p: 3, border: 1, borderRadius: 2 }}>
-                <SectionChip section={ section } />
                 <Stack component="form" onSubmit={ (e) => { e.preventDefault(); form.post('edit') } }
                     alignItems="stretch" spacing={2} >
                     <Button
@@ -29,7 +27,6 @@ export default function EditSection( {section} ) {
                         startIcon={ <Save /> }>
                         Salva
                     </Button>
-                    <Field form={ form } name='shortname' label='Nome breve' />
                     <Field form={ form } name='title' label='Titolo' />
                     <Field form={ form } name='content' label='Contenuto' multiline />
                     <Box sx={{ whiteSpace: 'pre-line' }}>{`

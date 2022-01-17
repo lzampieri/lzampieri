@@ -18,7 +18,7 @@ class SectionController extends Controller
      */
     public function show( $section_id )
     {
-        $section = Section::withTrashed()->findOrFail( $section_id );
+        $section = Section::withTrashed()->with('attachments')->findOrFail( $section_id );
         $section['trashed'] = $section->trashed();
         if( $section->reserved )
             Auth::user()->can('access reserved sections') || abort(403);
@@ -43,14 +43,12 @@ class SectionController extends Controller
     public function save( $section_id, Request $request )
     {
         $request->validate([
-            'shortname' => 'required|string|max:25|alpha_dash',
             'title' => 'required|string|max:255',
             'content' => 'required|string'
         ]);
 
         $section = Section::withTrashed()->findOrFail( $section_id );
 
-        $section->shortname = $request->shortname;
         $section->title = $request->title;
         $section->content = $request->content;
 

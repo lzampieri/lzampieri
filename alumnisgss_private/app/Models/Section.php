@@ -13,4 +13,8 @@ class Section extends Model
     protected $primaryKey = 'shortname';
     public $incrementing = false;
 
+
+    public function attachments() {
+        return $this->hasMany( Attachment::class );
+    }
 }
