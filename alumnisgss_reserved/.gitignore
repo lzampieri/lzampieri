@@ -1,0 +1,11 @@
+# Ignore all wordpress files
+/*
+
+# but keep my plugin and this file
+!.gitignore
+!wp-content
+wp-content/*
+!wp-content/plugins
+wp-content/plugins/*
+!wp-content/plugins/alumnisgss-manager
+
