@@ -1,0 +1,13 @@
+{
+  "name": "alumnisgss-tailwind",
+  "version": "0.1",
+  "scripts": {
+    "dev": "mix",
+    "prod": "mix --production",
+    "watch": "mix watch"
+  },
+  "dependencies": {
+    "laravel-mix": "^6.0.41",
+    "tailwindcss": "^3.0.20"
+  }
+}
