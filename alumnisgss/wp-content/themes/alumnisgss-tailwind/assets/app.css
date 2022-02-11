@@ -424,6 +424,19 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-backdrop-saturate:  ;
   --tw-backdrop-sepia:  ;
 }
+.h-screen {
+  height: 100vh;
+}
+.bg-stone-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(120 113 108 / var(--tw-bg-opacity));
+}
+.bg-contain {
+  background-size: contain;
+}
+.bg-no-repeat {
+  background-repeat: no-repeat;
+}
 .text-3xl {
   font-size: 1.875rem;
   line-height: 2.25rem;

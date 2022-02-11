@@ -2,7 +2,6 @@
 if ( ! function_exists( 'myfirsttheme_setup' ) ) :
 
 // Init
-
 function alumnisgss_init() {
 
     // Register "section" post type
@@ -23,7 +22,6 @@ function alumnisgss_init() {
     );
 }
 add_action( 'init', 'alumnisgss_init' );
-
 
 // Add custom fields to sections post type
 function alumnisgss_sections_addmetaboxes() {
@@ -68,5 +66,13 @@ function alumnisgss_sections_savemetaboxes_pagetorefer($post_id) {
 }
 add_action( 'admin_init', 'alumnisgss_sections_addmetaboxes' );
 add_action( 'save_post', 'alumnisgss_sections_savemetaboxes_pagetorefer');
+
+
+// Css and Js
+function add_theme_scripts() {
+    wp_enqueue_style( 'app', get_template_directory_uri() . '/assets/app.css' );
+    wp_enqueue_script( 'app', get_template_directory_uri() . '/assets/app.js' );
+}
+add_action( 'wp_enqueue_scripts', 'add_theme_scripts' );
 
 endif;

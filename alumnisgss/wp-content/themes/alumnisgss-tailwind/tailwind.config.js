@@ -2,8 +2,9 @@ module.exports = {
     mode: 'jit',
     content: [
         './index.php',
+        './home.php',
         './templates/*',
-        './templates/*',
+        './contents/*',
         './parts/*',
         './src/*',
         './src/*'
