@@ -20,6 +20,13 @@ function alumnisgss_init() {
             'supports' => array( 'title', 'editor' )
         )
     );
+
+    // Register menù
+    register_nav_menus(
+        array(
+            'main-menu' => 'Menù principale',
+            )
+    );    
 }
 add_action( 'init', 'alumnisgss_init' );
 

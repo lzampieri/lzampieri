@@ -8,5 +8,6 @@ module.exports = {
         './parts/*',
         './src/*',
         './src/*'
-    ]
+    ],
+    theme: require( './theme')
 };
