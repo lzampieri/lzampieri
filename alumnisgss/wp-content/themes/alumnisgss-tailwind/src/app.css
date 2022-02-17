@@ -10,4 +10,12 @@
     h1 {
         @apply text-7xl font-bold	
     }
+
+    h4 {
+        @apply text-2xl	
+    }
+
+    .separator {
+        @apply border-4 rounded border-secondary self-stretch mx-8
+    }
 }
