@@ -41,9 +41,19 @@ function alumnisgss_sections_addmetaboxes() {
         'side',
         'high'
     );
+    add_meta_box(
+        'sections_metadata_catalog',
+        '(Facoltativo) Catalogo da mostrare dopo la sezione:',
+        'alumnisgss_sections_getmetaboxes_catalog',
+        'alumnisgss_sections', // act only on this post type
+        'side',
+        'high'
+    );
 }
+add_action( 'admin_init', 'alumnisgss_sections_addmetaboxes' );
+// // Item to Refer
 function alumnisgss_sections_getmetaboxes_itemtorefer() {
-    $selected = get_post_custom()['item_to_refer'][0] or "hidden";
+    $selected = get_post_custom()['item_to_refer'][0];
     $options = "";
     
     $addoption = function($key, $name) use (&$options, $selected) {
@@ -93,8 +103,40 @@ function alumnisgss_sections_savemetaboxes_itemtorefer($post_id) {
         array_key_exists( 'item_to_refer', $_POST ) ? $_POST['item_to_refer'] : 'hidden'
     );
 }
-add_action( 'admin_init', 'alumnisgss_sections_addmetaboxes' );
 add_action( 'save_post', 'alumnisgss_sections_savemetaboxes_itemtorefer');
+// // Catalog
+function alumnisgss_sections_getmetaboxes_catalog() {
+    $selected = get_post_custom()['catalog'][0];
+    $options = "";
+    
+    $addoption = function($key, $name) use (&$options, $selected) {
+        $options .= "<option value=" . $key . ( $key == $selected ? " selected" : "" ) . ">" . $name . "</option>";
+    };
+    $addoption( "Nessuno", -1 );
+
+    // Categories
+    $cats = get_categories();
+    foreach ( $cats as $cat ) {
+        $addoption( $cat->term_id, $cat->name );
+    }
+
+    echo <<<FIELD
+    <select name="catalog" id="catalog">
+        $options
+    </select>
+    FIELD;
+}
+function alumnisgss_sections_savemetaboxes_catalog($post_id) {
+    if( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) {
+        return;
+    }
+    update_post_meta(
+        $post_id,
+        'catalog',
+        array_key_exists( 'catalog', $_POST ) ? $_POST['catalog'] : -1
+    );
+}
+add_action( 'save_post', 'alumnisgss_sections_savemetaboxes_catalog');
 
 
 // Css and Js
