@@ -3,8 +3,8 @@ module.exports = {
     content: [
         './index.php',
         './home.php',
+        './category.php',
         './templates/*',
-        './contents/*',
         './parts/*',
         './src/*',
         './src/*'

@@ -75,7 +75,7 @@ function alumnisgss_sections_getmetaboxes_itemtorefer() {
 
     // Categories
     $addsection("-- Categorie --");
-    $cats = get_categories();
+    $cats = get_categories( array( 'hide_empty' => false ) );
     foreach ( $cats as $cat ) {
         $addoption( "cat_" . $cat->term_id, $cat->name );
     }
