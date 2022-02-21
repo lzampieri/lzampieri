@@ -6,4 +6,6 @@
 
 <?php get_template_part('parts/sections_list', null, array( 'sections_ref' => 'homepage' ) ); ?>
 
+<?php get_template_part('parts/navigation_bottom'); ?>
+
 <?php get_template_part('parts/footer'); ?>

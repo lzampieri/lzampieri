@@ -19,7 +19,7 @@
         $image = get_the_post_thumbnail_url( $section );
         if( $image ) {
     ?>
-        <div class="flex flex-col items-center justify-center px-16 py-32">
+        <div class="flex flex-col items-center justify-center px-16 pt-64 first:pt-32">
             <div class="flex <?php echo ( $count % 2 == 0 ? "flex-row" : "flex-row-reverse" ); ?> w-full items-center">
                 <span class="text-contrast grow basis-0">
                     <h4><?php echo $section->post_title; ?></h4>
@@ -33,7 +33,7 @@
             </div>
         </div>
     <?php } else { ?>
-        <div class="flex flex-row items-center justify-center px-16 py-32">
+        <div class="flex flex-row items-center justify-center px-16 pt-64 first:pt-32">
             <span class="separator"></span>
             <span class="w-2/5 flex flex-col items-center text-contrast">
                 <h4><?php echo $section->post_title; ?></h4>
@@ -41,5 +41,10 @@
             </span>
             <span class="separator"></span>
         </div>
-    <?php } ?>
-    <?php }?>
+        <?php } ?>
+    <?php
+        $meta = get_post_meta( $section->ID );
+        if( array_key_exists( 'catalog', $meta ) && $meta['catalog'][0] != -1 ) {
+            get_template_part('parts/carousel', null, array( 'cat_id' => $meta['catalog'][0] ) );
+        };
+    } ?>

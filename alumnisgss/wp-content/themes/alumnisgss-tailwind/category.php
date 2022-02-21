@@ -10,4 +10,6 @@
 
 <?php get_template_part('parts/carousel', null, array( 'cat_id' => $wp_query->get_queried_object_id() ) ); ?>
 
+<?php get_template_part('parts/navigation_bottom'); ?>
+
 <?php get_template_part('parts/footer'); ?>

@@ -5,7 +5,7 @@
     ));
     if( $posts ) {
         ?>
-        <div class="flex flex-row items-center justify-center w-full py-32">
+        <div class="flex flex-row items-center justify-center w-full pt-32">
             <ul class="flex flex-row flex-wrap justify-center gap-4 w-2/3">
             <?php foreach( $posts as $post ) { ?>
                 <a href="<?php echo get_permalink( $post->ID ); ?>"

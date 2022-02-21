@@ -19,6 +19,10 @@
         @apply text-2xl	
     }
 
+    h5 {
+        @apply text-lg font-bold underline
+    }
+
     .separator {
         @apply border-4 rounded border-secondary self-stretch mx-8
     }
