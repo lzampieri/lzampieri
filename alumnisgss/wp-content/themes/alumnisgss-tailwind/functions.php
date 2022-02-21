@@ -8,6 +8,7 @@ function alumnisgss_init() {
     register_nav_menus(
         array(
             'main-menu' => 'Menù principale',
+            'footer-menu' => 'Piè di pagina'
             )
     );
 }
