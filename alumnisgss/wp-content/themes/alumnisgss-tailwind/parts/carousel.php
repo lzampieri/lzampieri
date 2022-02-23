@@ -1,7 +1,8 @@
 <?php
     $posts = get_posts( array(
         'posts_per_page' => -1,
-        'category' => $args['cat_id']
+        'category' => $args['cat_id'],
+        'post_status' => array('publish', 'private')    
     ));
     if( $posts ) {
         ?>

@@ -1,10 +1,10 @@
 <div class="flex flex-row w-full items-center p-8">
-    <span class="text-contrast grow-0 w-1/3">
+    <a href="<?php echo home_url(); ?>" class="text-contrast grow-0 w-1/3">
         <h4><?php echo get_bloginfo('name'); ?></h4>
         <?php if( !empty( get_bloginfo('description') ) ) {
             echo get_bloginfo('description');
         } ?>
-    </span>
+    </a>
     <span class="grow"></span>
     <span class="separator"></span>
     <span class="grow"></span>

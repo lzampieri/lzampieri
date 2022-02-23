@@ -35,7 +35,7 @@
     <?php } else { ?>
         <div class="flex flex-row items-center justify-center px-16 pt-64 first:pt-32">
             <span class="separator"></span>
-            <span class="w-2/5 flex flex-col items-center text-contrast">
+            <span class="w-2/5 text-center text-contrast">
                 <h4><?php echo $section->post_title; ?></h4>
                 <?php echo $section->post_content; ?>
             </span>
