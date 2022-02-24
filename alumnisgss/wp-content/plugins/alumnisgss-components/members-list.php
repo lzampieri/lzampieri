@@ -2,7 +2,7 @@
 namespace alumnisgss_components_members_list;
 
 function activate () {
-    add_option( 'alumnisgss_components_memberslist', '[["Anno","Nome","Studente","Sostenitore"]]' );
+    add_option( 'alumnisgss_components_memberslist', '[["Coorte","Nome","Studente","Sostenitore"]]' );
 }
 
 function deactivate () {
@@ -86,7 +86,7 @@ function csv_unpack( $thefile ) {
     $filestream = fopen( $thefile["tmp_name"], "rb" );
     $header = fgetcsv( $filestream, "1024" );
     $row = 1;
-    if( $header != array ( "Anno", "Nome", "Studente", "Sostenitore" ) ) {
+    if( $header != array ( "Coorte", "Nome", "Studente", "Sostenitore" ) ) {
         echo '<h3>File mal formattato alla riga ' . $row . '</h3>';
         return;
     }
@@ -139,5 +139,17 @@ function register_shortcode() {
 }
 
 function parse_shortcode() {
-    return "Qui la lista dei membri!!";
+    $members = json_decode( get_option( 'alumnisgss_components_memberslist' ) );
+    $output = "<dl>";
+    $coorte = 0;
+    foreach( array_slice( $members, 1) as $member ) {
+        if( $member[0] != $coorte ) {
+            $coorte = $member[0];
+            if( $coorte != 0 ) $output .= "</dd>";
+            $output .= "<dt>" . $coorte . "° Coorte </dt><dd>";
+        }
+        $output .= $member[1] . ( $member[2] == "S" ? " Studente" : "" ) . ( $member[3] == "S" ? " Sostenitore" : "" ) . "<br />";
+    }
+    $output .= "</dd></dl>";
+    return $output;
 }
