@@ -7,11 +7,13 @@ function activate () {
 
 function deactivate () {
     delete_option( 'alumnisgss_components_memberslist' );
+    
 }
 
 function register_hooks () {
     add_action( 'admin_menu', 'alumnisgss_components_members_list\add_admin_page' );
     add_action('init','alumnisgss_components_members_list\csv_pack');
+    add_action('init','alumnisgss_components_members_list\register_shortcode');
 }
 
 function add_admin_page() {
@@ -130,4 +132,12 @@ function csv_pack( ) {
     header('Content-Disposition: attachment; filename="alumni.csv";');
     fpassthru($filestream);
     exit();    
+}
+
+function register_shortcode() {
+    add_shortcode( 'alumnisgss_members', 'alumnisgss_components_members_list\parse_shortcode' );
+}
+
+function parse_shortcode() {
+    return "Qui la lista dei membri!!";
 }

@@ -22,8 +22,8 @@
         <div class="flex flex-col items-center justify-center px-16 pt-64 first:pt-32">
             <div class="flex <?php echo ( $count % 2 == 0 ? "flex-row" : "flex-row-reverse" ); ?> w-full items-center">
                 <span class="text-contrast grow basis-0">
-                    <h4><?php echo $section->post_title; ?></h4>
-                    <?php echo $section->post_content; ?>
+                    <h4><?php echo apply_filters( 'the_title', $section->post_title ); ?></h4>
+                    <?php echo apply_filters( 'the_content', $section->post_content ); ?>
                 </span>
                 <span class="separator"></span>
                 <span
@@ -36,8 +36,8 @@
         <div class="flex flex-row items-center justify-center px-16 pt-64 first:pt-32">
             <span class="separator"></span>
             <span class="w-2/5 text-center text-contrast">
-                <h4><?php echo $section->post_title; ?></h4>
-                <?php echo $section->post_content; ?>
+                <h4><?php echo apply_filters( 'the_title', $section->post_title ); ?></h4>
+                <?php echo apply_filters( 'the_content', $section->post_content ); ?>
             </span>
             <span class="separator"></span>
         </div>

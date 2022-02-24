@@ -4,6 +4,6 @@
         text-contrast py-4
         text-center
         ">
-        <?php echo $args['title']; ?>
+        <?php echo apply_filters( 'the_title', $args['title'] ); ?>
     </h2>
 </div>

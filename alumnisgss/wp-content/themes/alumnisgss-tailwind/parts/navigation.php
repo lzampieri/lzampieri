@@ -23,7 +23,7 @@
                 @mouseover.away="open_<?php echo $item->ID; ?> = false"
                 >
                 <img class="h-12" src="<?php echo get_template_directory_uri(); ?>/assets/logo_background.svg" />
-                <span><?php echo $item->title; ?></span>
+                <span><?php echo apply_filters( 'the_title', $item->title ); ?></span>
             </a>
         <?php }} ?>
         </ul>
@@ -50,7 +50,7 @@
                         group"
                     >
                     <img class="h-12" src="<?php echo get_template_directory_uri(); ?>/assets/logo_background.svg" />
-                    <span><?php echo $subitem->title; ?></span>
+                    <span><?php echo apply_filters( 'the_title', $subitem->title ); ?></span>
                 </a>
             <?php }} ?>
             </ul>

@@ -26,7 +26,7 @@
                         <img class="w-full max-h-40 block group-hover:hidden" src="<?php echo get_template_directory_uri(); ?>/assets/logo_background.svg" />
                         <img class="w-full max-h-40 hidden group-hover:block" src="<?php echo get_template_directory_uri(); ?>/assets/logo_contrast.svg" />
                     <?php } ?>
-                    <h4 class="text-center"><?php echo $post->post_title; ?></h4>
+                    <h4 class="text-center"><?php echo apply_filters( 'the_title', $post->post_title ); ?></h4>
                 </a>
             <?php } ?>
             </ul>

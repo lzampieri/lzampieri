@@ -5,11 +5,11 @@ $themenu = wp_get_nav_menu_items( get_nav_menu_locations()['footer-menu'] );
 <?php foreach( $themenu as $item ) { if( $item->menu_item_parent == 0 ) { ?>
     <div class="grow basis-0">
         <a href="<?php echo $item->url; ?>">
-            <h5><?php echo $item->title; ?></h5>
+            <h5><?php echo apply_filters( 'the_title', $item->title ); ?></h5>
         </a>
         <?php foreach( $themenu as $subitem ) { if( $subitem->menu_item_parent == $item->ID ) { ?>
             <a href="<?php echo $subitem->url; ?>">
-                <?php echo $subitem->title; ?>
+                <?php echo apply_filters( 'the_title', $subitem->title ); ?>
             </a><br/>
         <?php }} ?>
     </div>
