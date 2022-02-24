@@ -140,16 +140,16 @@ function register_shortcode() {
 
 function parse_shortcode() {
     $members = json_decode( get_option( 'alumnisgss_components_memberslist' ) );
-    $output = "<dl>";
+    $output = "<div class=\"alumnisgss_members\">";
     $coorte = 0;
     foreach( array_slice( $members, 1) as $member ) {
         if( $member[0] != $coorte ) {
             $coorte = $member[0];
-            if( $coorte != 0 ) $output .= "</dd>";
-            $output .= "<dt>" . $coorte . "° Coorte </dt><dd>";
+            if( $coorte != 0 ) $output .= "</dl>";
+            $output .= "<dl><dt>" . $coorte . "° Coorte </dt>";
         }
-        $output .= $member[1] . ( $member[2] == "S" ? " Studente" : "" ) . ( $member[3] == "S" ? " Sostenitore" : "" ) . "<br />";
+        $output .= "<dd class=\"" . ( $member[2] == "S" ? " alumnisgss_members_students" : "" ) . ( $member[3] == "S" ? " alumnisgss_members_supporter" : "" ) . "\">" . $member[1] . "</dd>";
     }
-    $output .= "</dd></dl>";
+    $output .= "</div>";
     return $output;
 }
