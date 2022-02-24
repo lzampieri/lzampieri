@@ -1,5 +1,5 @@
 <?php
-$themenu = wp_get_nav_menu_items( get_nav_menu_locations()['footer-menu'] );
+$themenu = wp_get_nav_menu_items( get_nav_menu_locations()[ is_user_logged_in() ? 'footer-menu-private' : 'footer-menu' ] );
 ?>
 <ul class="w-full bg-light flex flex-row items-start px-8 py-16 mt-32">
 <?php foreach( $themenu as $item ) { if( $item->menu_item_parent == 0 ) { ?>

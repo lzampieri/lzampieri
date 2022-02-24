@@ -789,28 +789,35 @@ dd {
 .ease-in {
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
 }
+
 .first\:pt-32:first-child {
   padding-top: 8rem;
 }
+
 .hover\:bg-secondary:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(155 0 20 / var(--tw-bg-opacity));
 }
+
 .hover\:text-contrast:hover {
   --tw-text-opacity: 1;
   color: rgb(251 252 255 / var(--tw-text-opacity));
 }
+
 .hover\:shadow-2xl:hover {
   --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
   --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
+
 .group:hover .group-hover\:block {
   display: block;
 }
+
 .group:hover .group-hover\:hidden {
   display: none;
 }
+
 .group:hover .group-hover\:grayscale-0 {
   --tw-grayscale: grayscale(0);
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);

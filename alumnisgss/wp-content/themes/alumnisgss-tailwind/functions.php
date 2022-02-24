@@ -7,8 +7,10 @@ function alumnisgss_init() {
     // Register menù
     register_nav_menus(
         array(
-            'main-menu' => 'Menù principale',
-            'footer-menu' => 'Piè di pagina'
+            'main-menu' => 'Menù principale pubblico',
+            'footer-menu' => 'Piè di pagina pubblico',
+            'main-menu-private' => 'Menù principale utenti registrati',
+            'footer-menu-private' => 'Piè di pagina utenti registrati'
             )
     );
 }

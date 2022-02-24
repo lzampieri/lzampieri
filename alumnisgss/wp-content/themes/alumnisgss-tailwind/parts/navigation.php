@@ -1,5 +1,5 @@
 <?php
-    $themenu = wp_get_nav_menu_items( get_nav_menu_locations()['main-menu'] );
+    $themenu = wp_get_nav_menu_items( get_nav_menu_locations()[ is_user_logged_in() ? 'main-menu-private' : 'main-menu'] );
     $thereare = [];
     foreach( $themenu as $item ) {
         $thereare[ $item->menu_item_parent ] = true;

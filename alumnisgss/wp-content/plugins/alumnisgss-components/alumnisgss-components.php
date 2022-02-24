@@ -15,6 +15,9 @@ function alumnisgss_components_activation() {
 
     require_once plugin_dir_path( __FILE__ ) . 'members-list.php';
     alumnisgss_components_members_list\activate();
+    
+    require_once plugin_dir_path( __FILE__ ) . 'newsletters-list.php';
+    alumnisgss_components_newsletters_list\activate();
 }
 register_activation_hook( __FILE__, 'alumnisgss_components_activation' );
 
@@ -24,6 +27,9 @@ function alumnisgss_components_deactivation() {
     
     require_once plugin_dir_path( __FILE__ ) . 'members-list.php';
     alumnisgss_components_members_list\deactivate();
+    
+    require_once plugin_dir_path( __FILE__ ) . 'newsletters-list.php';
+    alumnisgss_components_newsletters_list\deactivate();
 }
 register_deactivation_hook( __FILE__, 'alumnisgss_components_deactivation' );
 
@@ -33,5 +39,8 @@ function alumnisgss_components_register_hooks() {
     
     require_once plugin_dir_path( __FILE__ ) . 'members-list.php';
     alumnisgss_components_members_list\register_hooks();
+    
+    require_once plugin_dir_path( __FILE__ ) . 'newsletters-list.php';
+    alumnisgss_components_newsletters_list\register_hooks();
 }
 alumnisgss_components_register_hooks();
