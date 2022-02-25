@@ -1,11 +1,12 @@
 module.exports = {
     mode: 'jit',
     content: [
-        './index.php',
-        './home.php',
+        './404.php',
         './category.php',
-        './single.php',
+        './home.php',
+        './index.php',
         './page.php',
+        './single.php',
         './templates/*',
         './parts/*',
         './src/*',

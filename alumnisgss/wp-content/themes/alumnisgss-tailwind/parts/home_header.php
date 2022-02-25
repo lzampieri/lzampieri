@@ -1,5 +1,13 @@
-<div class="h-screen flex flex-col items-center justify-center">
-    <div class="flex flex-row h-4/6 w-4/6 items-center">
+<div class="
+    flex flex-col items-center justify-center
+    h-screen 
+    ">
+    <div class="
+        flex items-center gap-4
+        flex-col md:flex-row
+        md:h-4/6
+        w-full md:w-4/6
+        ">
         <span class="text-contrast grow basis-0">
             <h1><?php echo str_replace( " ", "<br />", get_bloginfo('name') ); ?></h1>
             <?php if( !empty( get_bloginfo('description') ) ) { ?>

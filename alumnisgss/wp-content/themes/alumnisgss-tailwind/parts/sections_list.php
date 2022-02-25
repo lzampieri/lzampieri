@@ -19,24 +19,28 @@
         $image = get_the_post_thumbnail_url( $section );
         if( $image ) {
     ?>
-        <div class="flex flex-col items-center justify-center px-16 pt-64 first:pt-32">
-            <div class="flex <?php echo ( $count % 2 == 0 ? "flex-row" : "flex-row-reverse" ); ?> w-full items-center">
-                <span class="text-contrast grow basis-0">
+        <div class="flex flex-col items-center justify-center px-4 md:px-16 pt-32 md:pt-64 first:pt-32">
+            <div class="flex flex-col <?php echo ( $count % 2 == 0 ? "md:flex-row" : "md:flex-row-reverse" ); ?> w-full items-center">
+                <span class="text-contrast md:grow basis-0">
                     <h4><?php echo apply_filters( 'the_title', $section->post_title ); ?></h4>
                     <?php echo apply_filters( 'the_content', $section->post_content ); ?>
                 </span>
                 <span class="separator"></span>
                 <span
-                    class="grow basis-0 self-stretch bg-no-repeat bg-cover bg-center"
+                    class="
+                        bg-no-repeat bg-cover bg-center
+                        aspect-square w-full
+                        md:aspect-auto md:w-auto md:grow md:basis-0 md:self-stretch
+                        "
                     style="background-image: url('<?php echo $image; ?>')">
                 </span>
             </div>
         </div>
     <?php } else { ?>
-        <div class="flex flex-row items-center justify-center px-16 pt-64 first:pt-32">
+        <div class="flex flex-col md:flex-row items-center justify-center px-4 md:px-16 pt-32 md:pt-64 first:pt-32">
             <span class="separator"></span>
-            <span class="w-2/5 text-center text-contrast">
-                <h4><?php echo apply_filters( 'the_title', $section->post_title ); ?></h4>
+            <span class="w-full md:w-2/5 text-center text-contrast">
+                <h4 class="pb-4 underline"><?php echo apply_filters( 'the_title', $section->post_title ); ?></h4>
                 <?php echo apply_filters( 'the_content', $section->post_content ); ?>
             </span>
             <span class="separator"></span>

@@ -94,8 +94,9 @@ function csv_unpack( $thefile ) {
     $data = [];
     $data[] = $header;
 
-    while( $line = fgetcsv( $filestream, "2048" ) ) {
+    while( $line = fgetcsv( $filestream, "4096" ) ) {
         $row ++;
+        $line = array_map("utf8_encode", $line);
         if( count( $line ) != 4 or !is_numeric( $line[0] ) or !( $line[2] == "" or $line[2] == "S" ) or !( $line[3] == "" or $line[3] == "S" ) ) {
             echo '<h3>File mal formattato alla riga ' . $row . '</h3>';
             return;

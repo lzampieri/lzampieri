@@ -8,15 +8,15 @@
     }
     
     h1 {
-        @apply text-7xl font-bold	
+        @apply text-4xl md:text-7xl font-bold
     }
 
     h2 {
-        @apply text-6xl font-bold
+        @apply text-3xl md:text-6xl font-bold
     }
 
     h4 {
-        @apply text-2xl	
+        @apply text-xl md:text-2xl	
     }
 
     h5 {
@@ -24,19 +24,19 @@
     }
 
     .separator {
-        @apply border-4 rounded border-secondary self-stretch mx-8
+        @apply border-4 rounded border-secondary self-stretch mx-8 my-8 md:my-0
     }
 
     .alumnisgss_members {
-        @apply w-full grid grid-flow-row grid-cols-2 gap-2 mt-16
+        @apply w-full mt-16
     }
 
     dl {
-        @apply grid grid-cols-2 gap-2 m-2 p-2 border-y-2 rounded border-secondary
+        @apply grid grid-cols-1 md:grid-cols-4 gap-2 m-2 p-2 border-y-2 rounded border-secondary mt-8
     }
 
     dt {
-        @apply col-span-2 text-center text-lg font-bold
+        @apply md:col-span-4 text-center text-lg font-bold
     }
 
     dd {

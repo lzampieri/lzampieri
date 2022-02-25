@@ -1,5 +1,5 @@
 <div class="flex flex-row items-center justify-center w-full pt-32">
-    <h2 class="w-2/5
+    <h2 class="w-5/6 md:w-2/5
         border-y-4 border-secondary rounded
         text-contrast py-4
         text-center
