@@ -2,7 +2,7 @@
     $posts = get_posts( array(
         'posts_per_page' => -1,
         'category' => $args['cat_id'],
-        'post_status' => array('publish', 'private') : array('publish')
+        'post_status' => is_user_logged_in() ? array('publish', 'private') : array('publish')
     ));
     if( $posts ) {
         ?>

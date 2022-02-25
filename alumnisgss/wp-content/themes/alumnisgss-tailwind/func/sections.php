@@ -4,8 +4,9 @@ function alumnisgss_sections_register() {
     register_post_type('alumnisgss_sections',
         array(
             'labels'      => array(
-                'name'          => __('Sezioni', 'textdomain'),
-                'singular_name' => __('Sezione', 'textdomain'),
+                'name'          => 'Sezioni',
+                'singular_name' => 'Sezione',
+                'add_new_item' => 'Aggiungi nuova sezione'
             ),
             'description' => 'Sezioni per le pagine del template',
             'public'      => true,
