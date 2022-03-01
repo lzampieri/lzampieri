@@ -2,7 +2,7 @@
     $posts = get_posts( array(
         'posts_per_page' => -1,
         'category' => $args['cat_id'],
-        'post_status' => is_user_logged_in() ? array('publish', 'private') : array('publish')
+        'post_status' => current_user_can( 'read_private_posts' ) ? array('publish', 'private') : array('publish')
     ));
     if( $posts ) {
         ?>
@@ -12,7 +12,7 @@
                 <a href="<?php echo get_permalink( $post->ID ); ?>"
                     class="w-full md:w-1/4
                         shadow-contrast shadow-lg
-                        bg-light text-background hover:bg-secondary hover:text-contrast
+                        bg-light text-dark hover:bg-secondary hover:text-contrast
                         flex flex-row md:flex-col justify-center items-center
                         border-4 border-secondary
                         group

@@ -16,7 +16,7 @@
     }
 
     h4 {
-        @apply text-xl md:text-2xl	
+        @apply text-xl md:text-2xl pb-4 underline
     }
 
     h5 {
@@ -50,4 +50,28 @@
     .alumnisgss_members_supporter {
         @apply underline
     }
+
+    form {
+        @apply grid grid-cols-1 md:grid-cols-2 gap-2 m-2 p-2
+    }
+
+    label {
+        @apply text-center md:text-right my-auto
+    }
+
+    input {
+        @apply text-dark
+    }
+
+    input[type="submit"] {
+        @apply col-span-2 border-4 border-secondary rounded p-2 mb-4 bg-light hover:bg-secondary text-dark hover:text-contrast mt-4
+    }
+
+    output {
+        @apply col-span-2 border-4 border-secondary rounded p-2 mb-4
+    }
+
+    /* input[type=""] {
+        @apply col-span-2
+    } */
 }

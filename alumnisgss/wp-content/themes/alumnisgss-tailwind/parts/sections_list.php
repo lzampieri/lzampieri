@@ -40,7 +40,7 @@
         <div class="flex flex-col md:flex-row items-center justify-center px-4 md:px-16 pt-32 md:pt-64 first:pt-32">
             <span class="separator"></span>
             <span class="w-full md:w-2/5 text-center text-contrast">
-                <h4 class="pb-4 underline"><?php echo apply_filters( 'the_title', $section->post_title ); ?></h4>
+                <h4><?php echo apply_filters( 'the_title', $section->post_title ); ?></h4>
                 <?php echo apply_filters( 'the_content', $section->post_content ); ?>
             </span>
             <span class="separator"></span>

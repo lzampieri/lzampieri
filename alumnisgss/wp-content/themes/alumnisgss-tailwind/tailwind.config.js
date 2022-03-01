@@ -13,5 +13,8 @@ module.exports = {
         './src/*',
         './app.css' // To force compilation of all explicitly defined stuff
     ],
-    theme: require( './theme')
+    theme: require( './theme'),
+    plugins: [
+        require('@tailwindcss/forms'),
+      ],
 };

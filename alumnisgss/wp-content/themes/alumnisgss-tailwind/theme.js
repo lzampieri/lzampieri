@@ -6,6 +6,7 @@ module.exports = {
         secondary: '#9b0014',
         contrast: '#fbfcff',
         light: '#d0ccd0',
-        background: '#404040'
+        dark: '#242424',
+        background: '#404040',
     }
 }

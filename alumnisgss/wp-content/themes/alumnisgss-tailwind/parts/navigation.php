@@ -1,5 +1,5 @@
 <?php
-    $themenu = wp_get_nav_menu_items( get_nav_menu_locations()[ is_user_logged_in() ? 'main-menu-private' : 'main-menu'] );
+    $themenu = wp_get_nav_menu_items( get_nav_menu_locations()[ current_user_can( 'read_private_posts' ) ? 'main-menu-private' : 'main-menu'] );
     $thereare = [];
     foreach( $themenu as $item ) {
         $thereare[ $item->menu_item_parent ] = true;
@@ -16,7 +16,7 @@
                 <a href="<?php echo $item->url; ?>"
                     class="w-full
                         shadow-background hover:shadow-2xl
-                        text-base text-background text-center"
+                        text-base text-dark text-center"
                     :class="hover_<?php echo $item->ID; ?> ? 'shadow-2xl' : 'shadow-md'"
                     @mouseover="open_<?php echo $item->ID; ?> = true"
                     @mouseover.away="open_<?php echo $item->ID; ?> = false"
@@ -40,7 +40,7 @@
                         <a href="<?php echo $subitem->url; ?>"
                             class="
                                 shadow-background shadow-md hover:shadow-2xl
-                                text-base text-background text-center px-2"
+                                text-base text-dark text-center px-2"
                             >
                             <?php echo apply_filters( 'the_title', $subitem->title ); ?>
                         </a>
@@ -55,7 +55,7 @@
                 <a href="<?php echo $item->url; ?>"
                     class="h-28 w-28  
                         shadow-background hover:shadow-2xl
-                        text-lg text-background text-center
+                        text-lg text-dark text-center
                         flex flex-col justify-center
                         group"
                     :class="hover_<?php echo $item->ID; ?> ? 'shadow-2xl' : 'shadow-md'"
@@ -85,7 +85,7 @@
                     <a href="<?php echo $subitem->url; ?>"
                         class="h-28 w-28  
                             shadow-md shadow-background hover:shadow-2xl
-                            text-lg text-background text-center
+                            text-lg text-dark text-center
                             flex flex-col justify-center
                             group"
                         >
@@ -96,6 +96,6 @@
                 </ul>
             <?php }} ?>
         </span>
-        <div>
+        </div>
     <?php }
 ?>
