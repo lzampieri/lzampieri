@@ -638,6 +638,18 @@ h5 {
   -webkit-text-decoration-line: underline;
           text-decoration-line: underline;
 }
+.tiletitle {
+  padding: 1rem;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+@media (min-width: 768px) {
+
+  .tiletitle {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+}
 .separator {
   margin-left: 2rem;
   margin-right: 2rem;
@@ -729,10 +741,32 @@ input {
   --tw-text-opacity: 1;
   color: rgb(36 36 36 / var(--tw-text-opacity));
 }
+.button {
+  grid-column: span 2 / span 2;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  border-width: 4px;
+  --tw-border-opacity: 1;
+  border-color: rgb(155 0 20 / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(208 204 208 / var(--tw-bg-opacity));
+  padding: 0.5rem;
+  --tw-text-opacity: 1;
+  color: rgb(36 36 36 / var(--tw-text-opacity));
+}
+.button:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(155 0 20 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(251 252 255 / var(--tw-text-opacity));
+}
 input[type="submit"] {
   grid-column: span 2 / span 2;
   margin-bottom: 1rem;
   margin-top: 1rem;
+  cursor: pointer;
   border-radius: 0.25rem;
   border-width: 4px;
   --tw-border-opacity: 1;
@@ -748,6 +782,14 @@ input[type="submit"]:hover {
   background-color: rgb(155 0 20 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
   color: rgb(251 252 255 / var(--tw-text-opacity));
+}
+input[type="checkbox"] {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+input[type="file"] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(208 204 208 / var(--tw-bg-opacity));
 }
 output {
   grid-column: span 2 / span 2;
@@ -850,6 +892,9 @@ output {
 }
 .basis-0 {
   flex-basis: 0px;
+}
+.cursor-pointer {
+  cursor: pointer;
 }
 .grid-flow-row {
   grid-auto-flow: row;

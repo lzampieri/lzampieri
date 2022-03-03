@@ -23,6 +23,10 @@
         @apply text-lg font-bold underline
     }
 
+    .tiletitle {
+        @apply text-xl md:text-2xl p-4
+    }
+
     .separator {
         @apply border-4 rounded border-secondary self-stretch mx-8 my-8 md:my-0
     }
@@ -63,8 +67,20 @@
         @apply text-dark
     }
 
+    .button {
+        @apply col-span-2 border-4 border-secondary rounded p-2 mb-4 bg-light hover:bg-secondary text-dark hover:text-contrast mt-4 cursor-pointer
+    }
+
     input[type="submit"] {
-        @apply col-span-2 border-4 border-secondary rounded p-2 mb-4 bg-light hover:bg-secondary text-dark hover:text-contrast mt-4
+        @apply button
+    }
+
+    input[type="checkbox"] {
+        @apply my-auto
+    }
+
+    input[type="file"] {
+        @apply bg-light
     }
 
     output {
