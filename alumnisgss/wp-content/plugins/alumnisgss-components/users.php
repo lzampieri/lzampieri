@@ -391,7 +391,17 @@ function add_admin_page() {
 function admin_page_content() {
 
 ?>
-    <h1>Todo</h1>
+    <h1>Shortcode disponibili:</h1>
+
+    <code>[alumnisgss_users_login]</code>
+
+    <code>[alumnisgss_users_registration]</code>
+
+    <code>[alumnisgss_users_logout]</code>
+
+    <h2>Per la gestione diretta degli utenti, si veda <a href="users.php">la sezione dedicata</a></h2>
+
+    <h2>Todo</h2>
 <?php
 
 }
