@@ -32,6 +32,7 @@ function register_hooks () {
 
     add_action('init','alumnisgss_components_users\register_shortcodes');
     add_action('init','alumnisgss_components_users\register_urls');
+    add_action('init','alumnisgss_components_users\register_css');
     add_filter( 'authenticate', 'alumnisgss_components_users\authenticate',  20, 3 );
 
 
@@ -42,6 +43,15 @@ function register_hooks () {
     add_action('template_redirect','alumnisgss_components_users\verify_mail');
     add_action('template_redirect','alumnisgss_components_users\verify_identity');
     add_filter( 'query_vars', 'alumnisgss_components_users\register_query_vars' );
+    
+    add_action('admin_init','alumnisgss_components_users\verify_mail');
+    add_action('admin_init','alumnisgss_components_users\verify_identity');
+    add_action('admin_init','alumnisgss_components_users\deverify_mail');
+    add_action('admin_init','alumnisgss_components_users\deverify_identity');
+    add_action('admin_init','alumnisgss_components_users\resend_verification_mail');
+
+    add_filter( 'manage_users_columns', 'alumnisgss_components_users\add_registration_column' );
+    add_filter( 'manage_users_custom_column', 'alumnisgss_components_users\get_registration_column', 10, 3 );
 }
 
 function register_shortcodes () {
@@ -60,6 +70,27 @@ function register_urls() {
         '^alumnisgss_components_users/verify_identity/(\d+)$',
         'index.php?plugin=alumnisgss_components_users&action=verify-identity&uid=$matches[1]',
         'top' );
+
+}
+
+function register_css() {
+    wp_register_style( 'dummy-handle-style', false );
+    wp_enqueue_style( 'dummy-handle-style' );
+    wp_add_inline_style( 'dummy-handle-style', <<<HTML
+        .alumnisgss-components-bullet {
+            display: inline-block!important;
+            width: 1em!important;
+            height: 1em!important;
+            border-radius: 50%!important;
+        }
+        .alumnisgss-components-bullet.ok {
+            background-color: #7ad03a
+        }
+        .alumnisgss-components-bullet.not {
+            background-color: #dc3232
+        }
+    HTML);
+
 }
 
 $reg_output = "";
@@ -253,12 +284,19 @@ function register_query_vars ( $vars ) {
     return $vars;    
 }
 
-function verify_mail () {
-    if( get_query_var('plugin') != 'alumnisgss_components_users' ) return;
-    if( get_query_var('action') != 'verify-mail' ) return;
-    
-    update_user_meta( get_query_var('uid'), 'alumnisgss_email_verified', 'ok' );   
+function get_or_queryvar( $key ) {
+    if( array_key_exists( $key, $_GET ) )
+        return $_GET[$key];
+    return get_query_var( $key );
+}
 
+function verify_mail () {
+    if( get_or_queryvar('plugin') != 'alumnisgss_components_users' ) return;
+    if( get_or_queryvar('action') != 'verify-mail' ) return;
+    
+    update_user_meta( get_or_queryvar('uid'), 'alumnisgss_email_verified', 'ok' );  
+    
+    if( is_admin() ) return;
     wp_register_script( 'dummy-handle-footer', '', [], '', true );
     wp_enqueue_script( 'dummy-handle-footer'  );
     wp_add_inline_script( 'dummy-handle-footer', 'alert("Email verificata");' );
@@ -266,8 +304,8 @@ function verify_mail () {
 }
 
 function verify_identity () {
-    if( get_query_var('plugin') != 'alumnisgss_components_users' ) return;
-    if( get_query_var('action') != 'verify-identity' ) return;
+    if( get_or_queryvar('plugin') != 'alumnisgss_components_users' ) return;
+    if( get_or_queryvar('action') != 'verify-identity' ) return;
         
     if( !current_user_can('promote_users') ) {
         if( is_user_logged_in() ) {
@@ -276,11 +314,67 @@ function verify_identity () {
         auth_redirect();
     }
     
-    update_user_meta( get_query_var('uid'), 'alumnisgss_identity_verified', 'ok' );
+    update_user_meta( get_or_queryvar('uid'), 'alumnisgss_identity_verified', 'ok' );
     
+    if( is_admin() ) return;
     wp_register_script( 'dummy-handle-footer', '', [], '', true );
     wp_enqueue_script( 'dummy-handle-footer'  );
     wp_add_inline_script( 'dummy-handle-footer', 'alert("Identità verificata");' );
+}
+
+function deverify_mail () {
+    if( get_or_queryvar('plugin') != 'alumnisgss_components_users' ) return;
+    if( get_or_queryvar('action') != 'deverify-mail' ) return;
+    
+    update_user_meta( get_or_queryvar('uid'), 'alumnisgss_email_verified', 'no' ); 
+    
+    if( is_admin() ) return;
+    wp_register_script( 'dummy-handle-footer', '', [], '', true );
+    wp_enqueue_script( 'dummy-handle-footer'  );
+    wp_add_inline_script( 'dummy-handle-footer', 'alert("Verifica della mail annullata");' );
+    
+}
+
+function deverify_identity () {
+    if( get_or_queryvar('plugin') != 'alumnisgss_components_users' ) return;
+    if( get_or_queryvar('action') != 'deverify-identity' ) return;
+        
+    if( !current_user_can('promote_users') ) {
+        if( is_user_logged_in() ) {
+            wp_logout();
+        }
+        auth_redirect();
+    }
+    
+    update_user_meta( get_or_queryvar('uid'), 'alumnisgss_identity_verified', 'no' );
+    
+    if( is_admin() ) return;
+    wp_register_script( 'dummy-handle-footer', '', [], '', true );
+    wp_enqueue_script( 'dummy-handle-footer'  );
+    wp_add_inline_script( 'dummy-handle-footer', 'alert("Verifica dell\'identità annullata");' );
+}
+
+function resend_verification_mail( ) {
+    if( get_or_queryvar('plugin') != 'alumnisgss_components_users' ) return;
+    if( get_or_queryvar('action') != 'resend-verification-mail' ) return;
+    
+    $uid = get_or_queryvar('uid');
+    $email = get_userdata( $uid )->user_email;
+    wp_mail(
+        $email,
+        'Registrazione Alumni Scuola Galileiana',
+        str_replace(
+            '#',
+            '<a href="' . get_site_url( null, '/alumnisgss_components_users/verify_email/' ) . $uid . '">qui</a>',
+            get_option( 'alumnisgss_components_users_mailconfirmmail' )
+        ),
+        array('Content-type: text/html','From: ' . get_option( 'alumnisgss_components_users_useradminemail' ) )
+    );
+        
+    if( is_admin() ) return;
+    wp_register_script( 'dummy-handle-footer', '', [], '', true );
+    wp_enqueue_script( 'dummy-handle-footer'  );
+    wp_add_inline_script( 'dummy-handle-footer', 'alert("Mail ri-mandata");' );
 }
 
 function add_admin_page() {
@@ -301,3 +395,40 @@ function admin_page_content() {
 <?php
 
 }
+
+function add_registration_column( $columns ) {
+    $columns['verifications'] = 'Verifiche';
+    return $columns;
+}
+
+function get_registration_column( $val, $column_name, $user_id ) {
+    if( $column_name == 'verifications' ) {
+        if( in_array( 'alumnus', get_userdata($user_id)->roles ) ) {
+            $email_verified = get_user_meta( $user_id, 'alumnisgss_email_verified', true ) == 'ok' ? 'ok' : 'not';        
+            $identity_verified = get_user_meta( $user_id, 'alumnisgss_identity_verified', true ) == 'ok' ? 'ok' : 'not';
+
+            $email_link = 
+                $email_verified == 'ok' ? 
+                "users.php?plugin=alumnisgss_components_users&action=deverify-mail&uid=$user_id" :
+                "users.php?plugin=alumnisgss_components_users&action=verify-mail&uid=$user_id";
+            $resend_email_link = 
+                $email_verified == 'ok' ? 
+                '' :
+                "<br/><br/><a href=\"users.php?plugin=alumnisgss_components_users&action=resend-verification-mail&uid=$user_id\">Rimanda mail di verifica</a>";
+            $identity_link = 
+                $identity_verified == 'ok' ? 
+                "users.php?plugin=alumnisgss_components_users&action=deverify-identity&uid=$user_id" :
+                "users.php?plugin=alumnisgss_components_users&action=verify-identity&uid=$user_id";
+
+            $val  = "Email: <span class=\"alumnisgss-components-bullet $email_verified\"></span> ";
+            $val .= "<a href=\"$email_link\">Cambia</a>";
+            $val .= "<br/>";
+            $val .= "Identità: <span class=\"alumnisgss-components-bullet $identity_verified\"></span> ";
+            $val .= "<a href=\"$identity_link\">Cambia</a>";
+            $val .= $resend_email_link;
+        }
+    }
+    return $val;
+}
+add_filter( 'manage_users_columns', 'alumnisgss_components_users\add_registration_column' );
+add_filter( 'manage_users_custom_column', 'alumnisgss_components_users\get_registration_column', 10, 3 );
