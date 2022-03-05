@@ -10,7 +10,8 @@ mix.webpackConfig({
     }
 });
 
-mix.js('src/app.js', 'assets')
+mix.setPublicPath('./')
+    .js('src/app.js', 'assets')
     .postCss('src/app.css', 'assets', [
         require("tailwindcss"),
     ]);

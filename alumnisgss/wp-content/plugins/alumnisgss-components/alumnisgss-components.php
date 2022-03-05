@@ -3,7 +3,7 @@
     Plugin Name: Alumni SGSS components
     Plugin URI: 
     description: 
-    Version: 0.1
+    Version: 1.0
     Author: Leonardo Zampieri
     Author URI: 
     License: 

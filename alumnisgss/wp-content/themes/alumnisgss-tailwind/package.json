@@ -1,6 +1,6 @@
 {
   "name": "alumnisgss-tailwind",
-  "version": "0.1",
+  "version": "1.0",
   "scripts": {
     "dev": "mix",
     "prod": "mix --production",
