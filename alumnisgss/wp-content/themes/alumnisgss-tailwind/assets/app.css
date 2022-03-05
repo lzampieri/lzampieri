@@ -940,15 +940,15 @@ output {
   border-top-width: 2px;
   border-bottom-width: 2px;
 }
-.border-secondary {
+.border-details-bg {
   --tw-border-opacity: 1;
   border-color: rgb(155 0 20 / var(--tw-border-opacity));
 }
-.bg-light {
+.bg-light-bg {
   --tw-bg-opacity: 1;
   background-color: rgb(208 204 208 / var(--tw-bg-opacity));
 }
-.bg-background {
+.bg-dark-bg {
   --tw-bg-opacity: 1;
   background-color: rgb(64 64 64 / var(--tw-bg-opacity));
 }
@@ -1040,21 +1040,25 @@ output {
 .italic {
   font-style: italic;
 }
-.text-dark {
+.text-light-tx {
   --tw-text-opacity: 1;
   color: rgb(36 36 36 / var(--tw-text-opacity));
 }
-.text-contrast {
+.text-dark-tx {
   --tw-text-opacity: 1;
   color: rgb(251 252 255 / var(--tw-text-opacity));
 }
-.text-light {
+.text-light-bg {
   --tw-text-opacity: 1;
   color: rgb(208 204 208 / var(--tw-text-opacity));
 }
 .underline {
   -webkit-text-decoration-line: underline;
           text-decoration-line: underline;
+}
+.no-underline {
+  -webkit-text-decoration-line: none;
+          text-decoration-line: none;
 }
 .opacity-0 {
   opacity: 0;
@@ -1077,11 +1081,7 @@ output {
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
-.shadow-contrast {
-  --tw-shadow-color: #fbfcff;
-  --tw-shadow: var(--tw-shadow-colored);
-}
-.shadow-background {
+.shadow-dark-bg {
   --tw-shadow-color: #404040;
   --tw-shadow: var(--tw-shadow-colored);
 }
@@ -1105,32 +1105,40 @@ output {
 .ease-in {
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
 }
+
 .first\:pt-32:first-child {
   padding-top: 8rem;
 }
-.hover\:bg-secondary:hover {
+
+.hover\:bg-details-bg:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(155 0 20 / var(--tw-bg-opacity));
 }
-.hover\:text-contrast:hover {
+
+.hover\:text-details-tx:hover {
   --tw-text-opacity: 1;
   color: rgb(251 252 255 / var(--tw-text-opacity));
 }
+
 .hover\:shadow-2xl:hover {
   --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
   --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
+
 .group:hover .group-hover\:block {
   display: block;
 }
+
 .group:hover .group-hover\:hidden {
   display: none;
 }
+
 .group:hover .group-hover\:grayscale-0 {
   --tw-grayscale: grayscale(0);
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
+
 @media (min-width: 768px) {
 
   .md\:col-span-4 {

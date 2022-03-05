@@ -12,9 +12,9 @@
                 <a href="<?php echo get_permalink( $post->ID ); ?>"
                     class="w-full md:w-1/4
                         shadow-contrast shadow-lg
-                        bg-light text-dark hover:bg-secondary hover:text-contrast
+                        bg-light-bg text-light-tx hover:bg-details-bg hover:text-details-tx
                         flex flex-row md:flex-col justify-center items-center
-                        border-4 border-secondary
+                        border-4 border-details-bg
                         group
                         p-4"
                     >

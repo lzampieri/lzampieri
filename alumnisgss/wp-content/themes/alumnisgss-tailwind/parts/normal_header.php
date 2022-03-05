@@ -3,7 +3,7 @@
     flex-col md:flex-row
     w-full items-center p-8
     ">
-    <a href="<?php echo home_url(); ?>" class="text-contrast grow-0 w-full md:w-1/3">
+    <a href="<?php echo home_url(); ?>" class="text-dark-tx grow-0 w-full md:w-1/3">
         <h4><?php echo get_bloginfo('name'); ?></h4>
         <?php if( !empty( get_bloginfo('description') ) ) {
             echo get_bloginfo('description');

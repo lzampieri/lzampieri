@@ -2,11 +2,17 @@ module.exports = {
     colors: {
         transparent: 'transparent',
         current: 'currentColor',
-        primary: '#30c5ff',
-        secondary: '#9b0014',
-        contrast: '#fbfcff',
-        light: '#d0ccd0',
-        dark: '#242424',
-        background: '#404040',
+        details: {
+            'bg': '#9b0014',
+            'tx': '#fbfcff'
+        },
+        dark: {
+            'bg': '#404040',
+            'tx': '#fbfcff'
+        },
+        light: {
+            'bg': '#d0ccd0',
+            'tx': '#242424'
+        }
     }
 }

@@ -9,5 +9,5 @@
 		<script defer src="https://unpkg.com/alpinejs@3.9.0/dist/cdn.min.js"></script> <!-- AlpineJs -->
 	</head>
 	<body
-	class="bg-background bg-no-repeat bg-contain bg-fixed"
+	class="bg-dark-bg bg-no-repeat bg-contain bg-fixed"
     style="background-image: url('<?php echo get_template_directory_uri(); ?>/assets/homepage_background.svg')">

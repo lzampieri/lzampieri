@@ -21,7 +21,7 @@
     ?>
         <div class="flex flex-col items-center justify-center px-4 md:px-16 pt-32 md:pt-64 first:pt-32">
             <div class="flex flex-col <?php echo ( $count % 2 == 0 ? "md:flex-row" : "md:flex-row-reverse" ); ?> w-full items-center">
-                <span class="text-contrast md:grow basis-0">
+                <span class="text-dark-tx md:grow basis-0">
                     <h4><?php echo apply_filters( 'the_title', $section->post_title ); ?></h4>
                     <?php echo apply_filters( 'the_content', $section->post_content ); ?>
                 </span>
@@ -39,7 +39,7 @@
     <?php } else { ?>
         <div class="flex flex-col md:flex-row items-center justify-center px-4 md:px-16 pt-32 md:pt-64 first:pt-32">
             <span class="separator"></span>
-            <span class="w-full md:w-2/5 text-center text-contrast">
+            <span class="w-full md:w-2/5 text-center text-dark-tx">
                 <h4><?php echo apply_filters( 'the_title', $section->post_title ); ?></h4>
                 <?php echo apply_filters( 'the_content', $section->post_content ); ?>
             </span>

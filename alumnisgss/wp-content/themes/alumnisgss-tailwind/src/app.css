@@ -28,7 +28,7 @@
     }
 
     .separator {
-        @apply border-4 rounded border-secondary self-stretch mx-8 my-8 md:my-0
+        @apply border-4 rounded border-details-bg self-stretch mx-8 my-8 md:my-0
     }
 
     .alumnisgss_members {
@@ -36,7 +36,7 @@
     }
 
     dl {
-        @apply grid grid-cols-1 md:grid-cols-4 gap-2 m-2 p-2 border-y-2 rounded border-secondary mt-8
+        @apply grid grid-cols-1 md:grid-cols-4 gap-2 m-2 p-2 border-y-2 rounded border-details-bg mt-8
     }
 
     dt {
@@ -64,11 +64,11 @@
     }
 
     input {
-        @apply text-dark
+        @apply text-light-tx
     }
 
     .button {
-        @apply col-span-2 border-4 border-secondary rounded p-2 mb-4 bg-light hover:bg-secondary text-dark hover:text-contrast mt-4 cursor-pointer
+        @apply col-span-2 border-4 border-details-bg rounded p-2 mb-4 bg-light-bg hover:bg-details-bg text-light-tx hover:text-details-tx mt-4 cursor-pointer
     }
 
     input[type="submit"] {
@@ -80,11 +80,11 @@
     }
 
     input[type="file"] {
-        @apply bg-light
+        @apply bg-light-bg
     }
 
     output {
-        @apply col-span-2 border-4 border-secondary rounded p-2 mb-4
+        @apply col-span-2 border-4 border-details-bg rounded p-2 mb-4
     }
 
     /* input[type=""] {

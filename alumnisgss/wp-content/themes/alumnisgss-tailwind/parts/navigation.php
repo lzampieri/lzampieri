@@ -11,12 +11,12 @@
             x-data="{ <?php foreach( $themenu as $item ) { echo 'open_' . $item->ID . ': false, hover_' . $item->ID . ': false, '; } ?> }"
         >
         <span class="block md:hidden"> <!-- Mobile version -->
-            <ul class="bg-light center flex flex-col justify-center items-center gap-2">
+            <ul class="bg-light-bg center flex flex-col justify-center items-center gap-2">
             <?php foreach( $themenu as $item ) { if( $item->menu_item_parent == 0 ) { ?>
                 <a href="<?php echo $item->url; ?>"
                     class="w-full
-                        shadow-background hover:shadow-2xl
-                        text-base text-dark text-center"
+                        shadow-dark-bg hover:shadow-2xl
+                        text-base text-light-tx text-center"
                     :class="hover_<?php echo $item->ID; ?> ? 'shadow-2xl' : 'shadow-md'"
                     @mouseover="open_<?php echo $item->ID; ?> = true"
                     @mouseover.away="open_<?php echo $item->ID; ?> = false"
@@ -24,7 +24,7 @@
                     <?php echo apply_filters( 'the_title', $item->title ); ?>
                 </a>
                 <ul
-                    class="bg-light center flex flex-col justify-center gap-2"
+                    class="bg-light-bg center flex flex-col justify-center gap-2"
                     x-show="open_<?php echo $item->ID; ?> | hover_<?php echo $item->ID; ?>"
                     
                     x-transition:enter="transition ease-out duration-150"
@@ -39,8 +39,8 @@
                     <?php foreach( $themenu as $subitem ) { if( $subitem->menu_item_parent == $item->ID ) { ?>
                         <a href="<?php echo $subitem->url; ?>"
                             class="
-                                shadow-background shadow-md hover:shadow-2xl
-                                text-base text-dark text-center px-2"
+                                shadow-dark-bg shadow-md hover:shadow-2xl
+                                text-base text-light-tx text-center px-2"
                             >
                             <?php echo apply_filters( 'the_title', $subitem->title ); ?>
                         </a>
@@ -50,12 +50,12 @@
             </ul>
         </span>
         <span class="hidden md:block"> <!-- Large screen version -->
-            <ul class="bg-light center flex flex-row justify-center gap-2">
+            <ul class="bg-light-bg center flex flex-row justify-center gap-2">
             <?php foreach( $themenu as $item ) { if( $item->menu_item_parent == 0 ) { ?>
                 <a href="<?php echo $item->url; ?>"
                     class="h-28 w-28  
-                        shadow-background hover:shadow-2xl
-                        text-lg text-dark text-center
+                        shadow-dark-bg hover:shadow-2xl
+                        text-lg text-light-tx text-center
                         flex flex-col justify-center
                         group"
                     :class="hover_<?php echo $item->ID; ?> ? 'shadow-2xl' : 'shadow-md'"
@@ -69,7 +69,7 @@
             </ul>
             <?php foreach( $themenu as $item ) { if( array_key_exists( $item->ID, $thereare ) ) { ?>
                 <ul
-                    class="bg-light center flex flex-row justify-center gap-2 pt-2"
+                    class="bg-light-bg center flex flex-row justify-center gap-2 pt-2"
                     x-show="open_<?php echo $item->ID; ?> | hover_<?php echo $item->ID; ?>"
                     
                     x-transition:enter="transition ease-out duration-150"
@@ -84,8 +84,8 @@
                 <?php foreach( $themenu as $subitem ) { if( $subitem->menu_item_parent == $item->ID ) { ?>
                     <a href="<?php echo $subitem->url; ?>"
                         class="h-28 w-28  
-                            shadow-md shadow-background hover:shadow-2xl
-                            text-lg text-dark text-center
+                            shadow-md shadow-dark-bg hover:shadow-2xl
+                            text-lg text-light-tx text-center
                             flex flex-col justify-center
                             group"
                         >
