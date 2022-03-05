@@ -24,3 +24,4 @@ add_action( 'wp_enqueue_scripts', 'add_theme_scripts' );
 require('func/sections.php');
 require('func/features.php');
 require('func/socials.php');
+require('func/buttons.php');
