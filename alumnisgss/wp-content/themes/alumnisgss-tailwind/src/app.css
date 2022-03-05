@@ -68,11 +68,11 @@
     }
 
     .button {
-        @apply col-span-2 border-4 border-details-bg rounded p-2 mb-4 bg-light-bg hover:bg-details-bg text-light-tx hover:text-details-tx mt-4 cursor-pointer
+        @apply border-4 border-details-bg rounded bg-light-bg hover:bg-details-bg text-light-tx hover:text-details-tx cursor-pointer p-2
     }
 
     input[type="submit"] {
-        @apply button
+        @apply col-span-2 my-4 button
     }
 
     input[type="checkbox"] {

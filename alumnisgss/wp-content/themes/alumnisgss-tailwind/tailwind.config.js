@@ -9,7 +9,7 @@ module.exports = {
         './single.php',
         './templates/*',
         './parts/*',
-        './src/*',
+        './func/*',
         './src/*',
         './app.css' // To force compilation of all explicitly defined stuff
     ],
