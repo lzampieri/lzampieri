@@ -13,8 +13,10 @@ function activate () {
         )
     );
 
-    add_option( 'alumnisgss_components_users_mailconfirmmail', "Ciao!\nLa tua registrazione sul portale degli Alumni della Scuola Galileiana è in attesa di conferma.\nClicca # per confermare questo indirizzo mail.\nLo staff." );
-    add_option( 'alumnisgss_components_users_adminconfirmmail', "Ciao!\nLa registrazione di % (@) sul portale degli Alumni della Scuola Galileiana è in attesa di conferma.\nClicca # per confermare questo indirizzo mail.\nLo staff." );
+    add_option( 'alumnisgss_components_users_mailconfirmmail_subject', "Registrazione Alumni Scuola Galileiana" );
+    add_option( 'alumnisgss_components_users_mailconfirmmail_text', "Ciao!\nLa tua registrazione sul portale degli Alumni della Scuola Galileiana è in attesa di conferma.\nClicca # per confermare questo indirizzo mail.\nLo staff." );
+    add_option( 'alumnisgss_components_users_adminconfirmmail_subject', "Registrazione Alumni Scuola Galileiana - Conferma identità" );
+    add_option( 'alumnisgss_components_users_adminconfirmmail_text', "Ciao!\nLa registrazione di % (@) sul portale degli Alumni della Scuola Galileiana è in attesa di conferma.\nClicca # per confermare l'identità, dopo aver verificato il documento allegato.\nLo staff." );
     add_option( 'alumnisgss_components_users_useradminemail', "leo.nick98t@gmail.com" );
 
     register_urls();
@@ -22,8 +24,10 @@ function activate () {
 }
 
 function deactivate () {
-    delete_option( 'alumnisgss_components_users_mailconfirmmail' );
-    delete_option( 'alumnisgss_components_users_adminconfirmmail' );
+    delete_option( 'alumnisgss_components_users_mailconfirmmail_subject' );
+    delete_option( 'alumnisgss_components_users_mailconfirmmail_text' );
+    delete_option( 'alumnisgss_components_users_adminconfirmmail_subject' );
+    delete_option( 'alumnisgss_components_users_adminconfirmmail_text' );
     delete_option( 'alumnisgss_components_users_useradminemail' );
 }
 
@@ -168,21 +172,30 @@ function register_query() {
         $reg_output = "<output>C'è stato un errore nella creazione dell'utente. $errormessage</output>";
         return;
     }
-
+    
     wp_mail(
         $email,
-        'Registrazione Alumni Scuola Galileiana',
+        get_option( 'alumnisgss_components_users_mailconfirmmail_subject' ),
         str_replace(
             '#',
             '<a href="' . get_site_url( null, '/alumnisgss_components_users/verify_email/' ) . $user_id . '">qui</a>',
-            get_option( 'alumnisgss_components_users_mailconfirmmail' )
+        str_replace(
+            '@',
+            $email,
+        str_replace(
+            '%',
+            $thename,
+            stripslashes( get_option( 'alumnisgss_components_users_mailconfirmmail_text' ) )
         ),
-        array('Content-type: text/html','From: ' . get_option( 'alumnisgss_components_users_useradminemail' ) )
+        ),
+        ),
+        array('Content-type: text/html','From: ' . get_option( 'alumnisgss_components_users_useradminemail' ) ),
+        $document
     );
-    
+
     wp_mail(
         get_option( 'alumnisgss_components_users_useradminemail' ),
-        'Registrazione Alumni Scuola Galileiana',
+        get_option( 'alumnisgss_components_users_adminconfirmmail_subject' ),
         str_replace(
             '#',
             '<a href="' . get_site_url( null, '/alumnisgss_components_users/verify_identity/' ) . $user_id . '">qui</a>',
@@ -192,7 +205,7 @@ function register_query() {
         str_replace(
             '%',
             $thename,
-            get_option( 'alumnisgss_components_users_adminconfirmmail' )
+            stripslashes( get_option( 'alumnisgss_components_users_adminconfirmmail_text' ) )
         ),
         ),
         ),
@@ -359,14 +372,24 @@ function resend_verification_mail( ) {
     if( get_or_queryvar('action') != 'resend-verification-mail' ) return;
     
     $uid = get_or_queryvar('uid');
-    $email = get_userdata( $uid )->user_email;
+    $userdata = get_userdata( $uid );
+    $email = $userdata->user_email;
+    $thename = $userdata->display_name;
     wp_mail(
         $email,
-        'Registrazione Alumni Scuola Galileiana',
+        get_option( 'alumnisgss_components_users_mailconfirmmail_subject' ),
         str_replace(
             '#',
             '<a href="' . get_site_url( null, '/alumnisgss_components_users/verify_email/' ) . $uid . '">qui</a>',
-            get_option( 'alumnisgss_components_users_mailconfirmmail' )
+        str_replace(
+            '@',
+            $email,
+        str_replace(
+            '%',
+            $thename,
+            stripslashes( get_option( 'alumnisgss_components_users_mailconfirmmail_text' ) )
+        ),
+        ),
         ),
         array('Content-type: text/html','From: ' . get_option( 'alumnisgss_components_users_useradminemail' ) )
     );
@@ -389,7 +412,20 @@ function add_admin_page() {
 }
 
 function admin_page_content() {
+    if( array_key_exists('useradminmail',$_POST) )
+        update_option( 'alumnisgss_components_users_useradminemail', $_POST['useradminmail'] );
 
+    if( array_key_exists('mailconfirmmail_subject',$_POST) )
+        update_option( 'alumnisgss_components_users_mailconfirmmail_subject', $_POST['mailconfirmmail_subject'] );
+
+    if( array_key_exists('mailconfirmmail_text',$_POST) )
+        update_option( 'alumnisgss_components_users_mailconfirmmail_text', $_POST['mailconfirmmail_text'] );
+
+    if( array_key_exists('adminconfirmmail_subject',$_POST) )
+        update_option( 'alumnisgss_components_users_adminconfirmmail_subject', $_POST['adminconfirmmail_subject'] );
+
+    if( array_key_exists('adminconfirmmail_text',$_POST) )
+        update_option( 'alumnisgss_components_users_adminconfirmmail_text', $_POST['adminconfirmmail_text'] );
 ?>
     <h1>Shortcode disponibili:</h1>
 
@@ -401,7 +437,25 @@ function admin_page_content() {
 
     <h2>Per la gestione diretta degli utenti, si veda <a href="users.php">la sezione dedicata</a></h2>
 
-    <h2>Todo</h2>
+    <h2>Gestione delle opzioni</h2>
+
+    <form action="" method="POST">
+        <label for="useradminmail">Indirizzo mail amministratore</label><br/>
+        <input type="text" value="<?php echo get_option( 'alumnisgss_components_users_useradminemail' ); ?>" name="useradminmail" id="useradminmail" style="width: 60%" /><br/>
+        <small>Questa mail apparirà come mittente in tutte le mail automatiche.</small><br/>
+        <br/>
+        <label for="mailconfirmmail_subject">Oggetto e testo email per conferma indirizzo mail</label><br/>
+        <input type="text" value="<?php echo get_option( 'alumnisgss_components_users_mailconfirmmail_subject' ); ?>" name="mailconfirmmail_subject" id="mailconfirmmail_subject" style="width: 60%" /><br/>
+        <textarea id="mailconfirmmail_text" name="mailconfirmmail_text" rows="10" style="width: 60%" ><?php echo stripslashes( get_option( 'alumnisgss_components_users_mailconfirmmail_text' ) ); ?></textarea><br/>
+        <small>Il simbolo <code>#</code> verrà sostituito dal link per la conferma, il simbolo <code>%</code> dal nome dell'utente appena registrato e il simbolo <code>@</code> dal suo indirizzo mail. Questa mail sarà inviata all'indirizzo dell'utente.</small><br/>
+        <br />
+        <label for="adminconfirmmail">Oggetto e testo email per conferma identità</label><br/>
+        <input type="text" value="<?php echo get_option( 'alumnisgss_components_users_adminconfirmmail_subject' ); ?>" name="adminconfirmmail_subject" id="adminconfirmmail_subject" style="width: 60%" /><br/>
+        <textarea id="adminconfirmmail_text" name="adminconfirmmail_text" rows="10" style="width: 60%" ><?php echo stripslashes( get_option( 'alumnisgss_components_users_adminconfirmmail_text' ) ); ?></textarea><br/>
+        <small>Il simbolo <code>#</code> verrà sostituito dal link per la conferma, il simbolo <code>%</code> dal nome dell'utente appena registrato e il simbolo <code>@</code> dal suo indirizzo mail. Questa mail sarà inviata all'indirizzo dell'amministratore.</small><br/>
+        <br/>
+        <input type="submit" value="Salva" />
+    </form>
 <?php
 
 }
