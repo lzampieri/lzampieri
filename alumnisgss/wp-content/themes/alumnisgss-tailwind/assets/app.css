@@ -803,8 +803,14 @@ output {
 /* input[type=""] {
         @apply col-span-2
     } */
+.col-span-1 {
+  grid-column: span 1 / span 1;
+}
 .col-span-2 {
   grid-column: span 2 / span 2;
+}
+.col-span-3 {
+  grid-column: span 3 / span 3;
 }
 .m-2 {
   margin: 0.5rem;
@@ -884,6 +890,12 @@ output {
 .w-5\/6 {
   width: 83.333333%;
 }
+.w-8 {
+  width: 2rem;
+}
+.w-12 {
+  width: 3rem;
+}
 .grow {
   flex-grow: 1;
 }
@@ -896,8 +908,8 @@ output {
 .cursor-pointer {
   cursor: pointer;
 }
-.grid-flow-row {
-  grid-auto-flow: row;
+.grid-flow-col {
+  grid-auto-flow: column;
 }
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
@@ -922,6 +934,9 @@ output {
 }
 .gap-2 {
   gap: 0.5rem;
+}
+.gap-3 {
+  gap: 0.75rem;
 }
 .self-stretch {
   align-self: stretch;
@@ -1007,6 +1022,9 @@ output {
 }
 .pb-4 {
   padding-bottom: 1rem;
+}
+.pb-16 {
+  padding-bottom: 4rem;
 }
 .text-center {
   text-align: center;
@@ -1141,6 +1159,10 @@ output {
 
 @media (min-width: 768px) {
 
+  .md\:col-span-3 {
+    grid-column: span 3 / span 3;
+  }
+
   .md\:col-span-4 {
     grid-column: span 4 / span 4;
   }
@@ -1204,6 +1226,10 @@ output {
 
   .md\:grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .md\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .md\:grid-cols-2 {

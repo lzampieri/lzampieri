@@ -1,6 +1,4 @@
 <?php
-if ( ! function_exists( 'myfirsttheme_setup' ) ) :
-
 // Init
 function alumnisgss_init() {
 
@@ -25,5 +23,4 @@ add_action( 'wp_enqueue_scripts', 'add_theme_scripts' );
 
 require('func/sections.php');
 require('func/features.php');
-
-endif;
+require('func/socials.php');
